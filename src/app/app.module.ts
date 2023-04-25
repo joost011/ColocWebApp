@@ -7,12 +7,14 @@ import { HomeComponent } from './components/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ResultsComponent } from './components/results/results.component';
+import { ChromosomeComponent } from './components/chromosome/chromosome.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ResultsComponent,
+    ChromosomeComponent,
   ],
   imports: [
     BrowserModule,
