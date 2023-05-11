@@ -1,0 +1,13 @@
+.modal-window {
+    background-color: white;
+    margin-top: 5vh;
+    border-radius: 1em;
+}
+
+.close-button {
+    font-size: 2em;
+}
+
+.close-button:hover {
+    cursor: pointer;
+}

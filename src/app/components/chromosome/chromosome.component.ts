@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-chromosome',
@@ -6,6 +7,10 @@ import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '
   styleUrls: ['./chromosome.component.css']
 })
 export class ChromosomeComponent implements OnInit, AfterViewInit {
+
+  constructor(
+    public modalService: ModalService,
+  ) { }
 
   public chromosomeData: any = {
     1: {
@@ -100,25 +105,25 @@ export class ChromosomeComponent implements OnInit, AfterViewInit {
 
   @Input() chromosomeNumber: number = 0;
   @Input() data: any;
-  @ViewChild('canvas', {read: ElementRef}) canvas!: ElementRef<HTMLCanvasElement>;
-  
+  @ViewChild('canvas', { read: ElementRef }) canvas!: ElementRef<HTMLCanvasElement>;
+
   public data2: any;
 
   ngOnInit(): void {
-    
+
   }
 
   ngAfterViewInit(): void {
     this.draw();
 
-    if (this.data.length > 10){
+    if (this.data.length > 10) {
       this.data2 = this.data.splice(10, this.data.length);
     }
-    
+
   }
 
 
-  public drawGene(gene: any){
+  public drawGene(gene: any) {
     let bandHeight = this.getLocation(gene);
     let color = 'yellow';
     let offset = 25;
@@ -131,16 +136,14 @@ export class ChromosomeComponent implements OnInit, AfterViewInit {
     ctx!.fill();
   }
 
-  public resetCanvas(){
+  public resetCanvas() {
     let ctx = this.canvas.nativeElement.getContext('2d');
     ctx!.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
     this.draw();
   }
 
-  private getLocation(gene: any){
+  private getLocation(gene: any) {
     let geneCenter = gene.location.start_position + ((gene.location.stop_position - gene.location.start_position) / 2)
-    console.log(geneCenter / 1000000);
-    
     return geneCenter / 1000000;
   }
 
@@ -150,21 +153,21 @@ export class ChromosomeComponent implements OnInit, AfterViewInit {
     let color = '#AAAAAA';
     let ctx = this.canvas.nativeElement.getContext('2d');
     let offset = 25;
-        
+
     ctx!.beginPath();
     ctx!.arc(150, offset, 15, 0, 2 * Math.PI);
     ctx!.strokeStyle = color;
     ctx!.stroke();
     ctx!.fillStyle = color;
     ctx!.fill();
-    
+
     ctx!.beginPath();
     ctx!.arc(150, totalHeight + offset, 15, 0, 2 * Math.PI);
     ctx!.strokeStyle = color;
     ctx!.stroke();
     ctx!.fillStyle = color;
     ctx!.fill();
-    
+
     ctx!.beginPath();
     ctx!.rect(135, offset, 30, centromeHeight - offset + 1);
     ctx!.strokeStyle = color;
@@ -208,6 +211,9 @@ export class ChromosomeComponent implements OnInit, AfterViewInit {
     ctx!.fillStyle = color;
     ctx!.fill();
   }
-  
 
+
+  public openGeneModal(gene: any) {
+    this.modalService.openGeneModal(gene);
+  }
 }

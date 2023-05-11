@@ -3,16 +3,50 @@
         <h1 class="mt-5">Colocalization</h1>
     </div>
 
-    <div class="row justify-content-center">
-        <div class="col-3">
-            <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-5">
-
-                <label>Choose a GWAS file</label>
-                <input type="file" (change)="onFileSelect($event)" />
-
-                <button type="submit" class="mt-5">Start</button>
-
-            </form>
+    <div class="col-12">
+        <div class="row justify-content-center" *ngIf="!submitted">
+            <div class="col-6 text-center">
+                <div class="mt-5">
+                    <label for="inputTicket">Ticket:</label><br />
+                    <input type="text" [(ngModel)]="inputTicket" name="inputTicket" />
+                    <button type="submit" *ngIf="!submitted" (click)="getStatus(inputTicket)">Get status</button>
+                </div>
+            </div>
         </div>
+    
+        <div class="row justify-content-center" *ngIf="!submitted">
+            <div class="col-3 text-center">
+                <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-5">
+    
+                    <label>Choose a GWAS file</label><br />
+                    <input type="file" (change)="onFileSelect($event)" /><br />
+                    <!-- 
+                    <div class="mt-5">
+                        <input type="radio" id="grch37" name="referenceGenome" value="grch37" formControlName="referenceGenome" />
+                        <label for="grch37">GRCh37</label>
+        
+                        <input type="radio" id="grch38" name="referenceGenome" value="grch38" formControlName="referenceGenome" class="ms-5" />
+                        <label for="grch38">GRCh38</label><br>
+                    </div> -->
+    
+                    <button type="submit" class="mt-5">Start</button>
+    
+                    <div >
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    
+        <div class="row justify-content-center" *ngIf="colocObject">
+            <div class="col-3 text-center">
+                <div>Ticket:</div>
+                <div>{{ ticket }}</div><br />
+                <div>Status:</div>
+                <div>{{ colocObject.status_message }}</div>
+            </div>
+        </div>
+    
     </div>
+   
 </div>

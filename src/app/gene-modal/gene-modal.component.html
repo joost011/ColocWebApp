@@ -1,0 +1,41 @@
+<div class="modal-container"
+    style="position: fixed; background-color: rgba(122, 122, 122, 0.5); z-index: 999; top: 0; left: 0; right: 0; bottom: 0;"
+    (click)="modalService.closeGeneModal()">
+    <div class="row mx-0 justify-content-center">
+        <div class="col-12 col-md-8">
+            <div class="modal-window"
+                (click)="$event.stopPropagation()" *ngIf="modalService.selectedGene">
+
+                <div class="w-100 text-end">
+                    <span class="close-button m-3" (click)="modalService.closeGeneModal()">&#10005;</span>
+                </div>
+
+                <div class="pt-2">
+                    <h1 class="text-center">{{ modalService.selectedGene.location.gene_name }}</h1>
+                </div>
+
+                <div class="row">
+                    <div class="col-7">
+                        <app-scatter-plot [type]="'combined'" [data]="modalService.selectedGene" [height]="700" [width]="700"
+                        [xLabel]="'GWAS -log<sub>10</sub>(P)'" [yLabel]="'eQTL -log<sub>10</sub>(P)'"></app-scatter-plot>
+                    </div>
+                    <div class="col-5">
+                        <div class="row">
+                            <div class="col-12">
+                                <app-scatter-plot [type]="'eqtl'" [data]="modalService.selectedGene.eqtls" [height]="350"
+                                    [xLabel]="'Position on chromosome ' + modalService.selectedGene.location.chromosome" [yLabel]="'eQTL -log<sub>10</sub>(P)'"></app-scatter-plot>
+                            </div>
+                            <div class="col-12">
+                                <app-scatter-plot [type]="'gwas'" [data]="modalService.selectedGene.gwas" [height]="350"
+                                    [xLabel]="'Position on chromosome ' + modalService.selectedGene.location.chromosome" [yLabel]="'GWAS -log<sub>10</sub>(P)'"></app-scatter-plot>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="height: 5vh;"></div>
+
+            </div>
+        </div>
+    </div>
+</div>

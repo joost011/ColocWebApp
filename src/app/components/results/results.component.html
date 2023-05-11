@@ -1,11 +1,12 @@
-<div class="row mt-5 mx-0 px-5 justify-content-center">
-
-    <div class="col-3" *ngFor="let chromosome of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]">
-
-        <div class="text-center"><span style="margin-left: 25px;">Chromosome {{ chromosome }}</span></div>
-
-        <app-chromosome [chromosomeNumber]="chromosome" [data]="chromosomeGenes[chromosome]"></app-chromosome>
-
+<div class="position-relative">
+    <div class="row mx-0 px-5 justify-content-center">
+        <div class="col-3 mt-5" *ngFor="let chromosome of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]">
+            <div class="text-center"><span style="margin-left: 0;">Chromosome {{ chromosome }}</span></div>
+            <app-chromosome [chromosomeNumber]="chromosome" [data]="chromosomeGenes[chromosome]"></app-chromosome>
+        </div>
     </div>
-
+    <app-gene-modal #geneModal style="display: none;"></app-gene-modal>
 </div>
+
+
+

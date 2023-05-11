@@ -8,6 +8,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ResultsComponent } from './components/results/results.component';
 import { ChromosomeComponent } from './components/chromosome/chromosome.component';
+import { ScatterPlotComponent } from './components/scatter-plot/scatter-plot.component';
+import { GeneModalComponent } from './gene-modal/gene-modal.component';
+
+import * as PlotlyJS from 'plotly.js-dist-min';
+import { PlotlyModule } from 'angular-plotly.js';
+PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
   declarations: [
@@ -15,6 +21,8 @@ import { ChromosomeComponent } from './components/chromosome/chromosome.componen
     HomeComponent,
     ResultsComponent,
     ChromosomeComponent,
+    ScatterPlotComponent,
+    GeneModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,6 +30,7 @@ import { ChromosomeComponent } from './components/chromosome/chromosome.componen
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    PlotlyModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

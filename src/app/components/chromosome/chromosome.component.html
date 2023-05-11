@@ -2,7 +2,7 @@
     <div class="position-absolute" style="top: 15px; left: -50px;">
         <ul style="list-style-type: none; margin: 0; padding: 0; font-size: 80%;">
             <li *ngFor="let gene of data" style="width: 160px; text-align: end;"
-            (mouseenter)='drawGene(gene)' (mouseout)='resetCanvas()'>{{ gene.location.gene_name }}</li>
+            (mouseenter)="drawGene(gene)" (mouseout)="resetCanvas()" (click)="openGeneModal(gene)">{{ gene.location.gene_name }}</li>
         </ul>
     </div>
     <canvas #canvas  width="300" height="325">
@@ -10,7 +10,7 @@
     <div class="position-absolute" style="top: 15px; left: 190px;" *ngIf="data2">
         <ul style="list-style-type: none; margin: 0; padding: 0; font-size: 80%;">
             <li *ngFor="let gene of data2" style="width: 160px; text-align: start; z-index: 100;"
-            (mouseenter)='drawGene(gene)' (mouseout)='resetCanvas()'>{{ gene.location.gene_name }}</li>
+            (mouseenter)="drawGene(gene)" (mouseout)="resetCanvas()" (click)="openGeneModal(gene)">{{ gene.location.gene_name }}</li>
         </ul>
     </div>
 </div>
