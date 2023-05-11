@@ -125,7 +125,7 @@ export class ChromosomeComponent implements OnInit, AfterViewInit {
 
   public drawGene(gene: any) {
     let bandHeight = this.getLocation(gene);
-    let color = 'yellow';
+    let color = '#0F2098';
     let offset = 25;
     let ctx = this.canvas.nativeElement.getContext('2d');
     ctx!.beginPath();
@@ -143,7 +143,7 @@ export class ChromosomeComponent implements OnInit, AfterViewInit {
   }
 
   private getLocation(gene: any) {
-    let geneCenter = gene.location.start_position + ((gene.location.stop_position - gene.location.start_position) / 2)
+    let geneCenter = gene.meta_data.start_position + ((gene.meta_data.stop_position - gene.meta_data.start_position) / 2)
     return geneCenter / 1000000;
   }
 

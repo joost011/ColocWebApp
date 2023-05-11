@@ -1,5 +1,25 @@
 <div class="position-relative">
-    <div class="row mx-0 px-5 justify-content-center">
+
+    <div class="row my-3 mx-0 justify-content-center" *ngIf="data">
+        <div class="col-12 text-center">
+            <div>
+                <span class="info-label px-5">Total genes tested: {{ data.total_tested_genes }}</span>
+                <span class="info-label px-5">Total genes colocalizing: {{ data.total_colocalizing_genes }} ({{ data.total_colocalizing_genes / data.total_tested_genes * 100 | number }}%)</span>
+            </div>
+            <!-- <div class="mt-3">
+                <span class="info-label px-5">Total eQTL SNPs: {{ data.total_eqtl_snps }}</span>
+                <span class="info-label px-5">Total GWAS SNPs: {{ data.total_gwas_snps }}</span>
+            </div> -->
+        </div>
+    </div>
+
+    <div class="row mx-0 justify-content-center">
+        <div class="col-10">
+            <hr />
+        </div>
+    </div>
+    
+    <div class="row mx-0 justify-content-center">
         <div class="col-3 mt-5" *ngFor="let chromosome of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]">
             <div class="text-center"><span style="margin-left: 0;">Chromosome {{ chromosome }}</span></div>
             <app-chromosome [chromosomeNumber]="chromosome" [data]="chromosomeGenes[chromosome]"></app-chromosome>

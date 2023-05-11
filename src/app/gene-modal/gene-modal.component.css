@@ -1,7 +1,13 @@
 .modal-window {
     background-color: white;
     margin-top: 5vh;
-    border-radius: 1em;
+    border: 1px solid black;
+}
+
+.modal-body {
+    height: 80vh;
+    overflow-y: scroll;
+    overflow-x: hidden
 }
 
 .close-button {
@@ -10,4 +16,8 @@
 
 .close-button:hover {
     cursor: pointer;
+}
+
+.info-label {
+    font-size: 1.5em;
 }

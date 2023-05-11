@@ -62,9 +62,9 @@ export class ResultsComponent {
         console.log(res);
         this.data = res;
 
-        for (const key in this.data) {
-          const gene = this.data[key];
-          let chromosome = gene['location']['chromosome']
+        for (const key in this.data['genes']) {
+          const gene = this.data['genes'][key];
+          let chromosome = gene['meta_data']['chromosome']
     
           if (chromosome in this.chromosomeGenes) {
             this.chromosomeGenes[chromosome].push(gene)
@@ -81,9 +81,7 @@ export class ResultsComponent {
   }
 
   ngAfterViewInit(): void {
-    this.modalService.geneModal = this.geneModal;
-    console.log(this.geneModal);
-    
+    this.modalService.geneModal = this.geneModal;    
   }
 
   ngOnDestroy(): void {
