@@ -5,9 +5,10 @@
 }
 
 .modal-body {
-    height: 80vh;
+    height: 70vh;
     overflow-y: scroll;
-    overflow-x: hidden
+    overflow-x: hidden;
+    padding: 25px;
 }
 
 .close-button {
@@ -19,5 +20,5 @@
 }
 
 .info-label {
-    font-size: 1.5em;
+    font-size: 1.2em;
 }

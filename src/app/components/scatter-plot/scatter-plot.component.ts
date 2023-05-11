@@ -122,6 +122,13 @@ export class ScatterPlotComponent {
             }
           },
         },
+        margin: {
+          l: 50,
+          r: 50,
+          b: 50,
+          t: 50,
+          pad: 4
+        },
       },
 
     }

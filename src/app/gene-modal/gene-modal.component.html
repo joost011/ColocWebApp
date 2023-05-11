@@ -2,7 +2,7 @@
     style="position: fixed; background-color: rgba(122, 122, 122, 0.5); z-index: 999; top: 0; left: 0; right: 0; bottom: 0;"
     (click)="modalService.closeGeneModal()">
     <div class="row mx-0 justify-content-center">
-        <div class="col-12 col-md-8">
+        <div class="col-12 col-md-9">
 
             <div class="modal-window position-relative"
                 (click)="$event.stopPropagation()" *ngIf="modalService.selectedGene">
@@ -24,27 +24,27 @@
                         <!-- <div class="col-12 text-center">
                             <span class="info-label">Posterior probability: {{ modalService.selectedGene.posterior['PP.H4.abf'] }}</span>
                         </div> -->
-                        <div class="col-12 text-center mt-2">
-                            <span class="info-label px-5">Posterior probability H4: {{ modalService.selectedGene.posterior['PP.H4.abf'] }}</span><br />
-                            <span class="info-label px-5 mt-1">Total eQTL SNPs: {{ modalService.selectedGene.meta_data.total_eqtl_snps }}</span>
-                            <span class="info-label px-5">Total GWAS SNPs: {{ modalService.selectedGene.meta_data.total_gwas_snps }}</span>
-                            <span class="info-label px-5">Total intersecting SNPs: {{ modalService.selectedGene.meta_data.total_intersecting_snps }}</span>
+                        <div class="col-12 text-center">
+                            <span class="px-3" style="font-size: 1.5em;">Posterior probability H4: {{ modalService.selectedGene.posterior['PP.H4.abf'] }}</span><br />
+                            <span class="info-label px-3 mt-1">Total eQTL SNPs: {{ modalService.selectedGene.meta_data.total_eqtl_snps }}</span>
+                            <span class="info-label px-4">Total GWAS SNPs: {{ modalService.selectedGene.meta_data.total_gwas_snps }}</span>
+                            <span class="info-label px-3">Total intersecting SNPs: {{ modalService.selectedGene.meta_data.total_intersecting_snps }}</span>
                         </div>
                     </div>
     
                     <div class="row">
                         <div class="col-7">
-                            <app-scatter-plot [type]="'combined'" [data]="modalService.selectedGene" [height]="700" [width]="700"
+                            <app-scatter-plot [type]="'combined'" [data]="modalService.selectedGene" [height]="450" [width]="450"
                             [xLabel]="'GWAS -log<sub>10</sub>(P)'" [yLabel]="'eQTL -log<sub>10</sub>(P)'"></app-scatter-plot>
                         </div>
                         <div class="col-5">
                             <div class="row">
                                 <div class="col-12">
-                                    <app-scatter-plot [type]="'eqtl'" [data]="modalService.selectedGene.eqtls" [height]="350"
+                                    <app-scatter-plot [type]="'eqtl'" [data]="modalService.selectedGene.eqtls" [height]="225"
                                         [xLabel]="'Position on chromosome ' + modalService.selectedGene.meta_data.chromosome" [yLabel]="'eQTL -log<sub>10</sub>(P)'"></app-scatter-plot>
                                 </div>
                                 <div class="col-12">
-                                    <app-scatter-plot [type]="'gwas'" [data]="modalService.selectedGene.gwas" [height]="350"
+                                    <app-scatter-plot [type]="'gwas'" [data]="modalService.selectedGene.gwas" [height]="225"
                                         [xLabel]="'Position on chromosome ' + modalService.selectedGene.meta_data.chromosome" [yLabel]="'GWAS -log<sub>10</sub>(P)'"></app-scatter-plot>
                                 </div>
                             </div>
