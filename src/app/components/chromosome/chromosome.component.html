@@ -1,7 +1,7 @@
 <div class="position-relative">
     <div class="position-absolute" style="top: 15px; left: -50px;">
         <ul style="list-style-type: none; margin: 0; padding: 0; font-size: 80%;">
-            <li *ngFor="let gene of data" style="width: 160px; text-align: end;"
+            <li *ngFor="let gene of data" [style.color]="pickHex(gene.posterior['PP.H4.abf'])" style="width: 160px; text-align: end; font-weight: bold;" 
             (mouseenter)="drawGene(gene)" (mouseout)="resetCanvas()" (click)="openGeneModal(gene)">{{ gene.meta_data.gene_name }}</li>
         </ul>
     </div>
@@ -13,6 +13,9 @@
             (mouseenter)="drawGene(gene)" (mouseout)="resetCanvas()" (click)="openGeneModal(gene)">{{ gene.meta_data.gene_name }}</li>
         </ul>
     </div>
+
+
+    <!-- <div style="width: 50px; height: 50px;" [style.background-color]="pickHex(1)"></div> -->
 </div>
 
 

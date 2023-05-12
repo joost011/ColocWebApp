@@ -216,4 +216,23 @@ export class ChromosomeComponent implements OnInit, AfterViewInit {
   public openGeneModal(gene: any) {
     this.modalService.openGeneModal(gene);
   }
+
+  private RGBValueToHex(c: any) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+  }
+  public colorGradientPicker(weight: number) {
+    let lowerRange = [255, 255, 255];
+    let upperRange = [2, 115, 186];
+    var w1 = weight;
+    var w2 = (1 - w1) * 2;
+    var rgb = [
+        Math.round(upperRange[0] * w1 + lowerRange[0] * w2),
+        Math.round(upperRange[1] * w1 + lowerRange[1] * w2),
+        Math.round(upperRange[2] * w1 + lowerRange[2] * w2)];
+    return "#" + this.RGBValueToHex(rgb[0]) + this.RGBValueToHex(rgb[1]) + this.RGBValueToHex(rgb[2]);
+}
+
+
+
 }
