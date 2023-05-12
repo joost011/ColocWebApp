@@ -5,7 +5,7 @@
 }
 
 .modal-body {
-    height: 70vh;
+    height: 80vh;
     overflow-y: scroll;
     overflow-x: hidden;
     padding: 25px;
