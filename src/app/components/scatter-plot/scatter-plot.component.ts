@@ -50,8 +50,6 @@ export class ScatterPlotComponent {
   }
 
   private drawPlot() {
-    console.log(this.data);
-
     let x: any;
     let y: any;
     let snips: any;
@@ -72,11 +70,6 @@ export class ScatterPlotComponent {
       x = this.sortSnipsAndPValues(this.data.gwas.snp, this.data.gwas.logp)['pValues'];
       y = this.sortSnipsAndPValues(this.data.eqtls.snp, this.data.eqtls.logp)['pValues'];
       snips = this.sortSnipsAndPValues(this.data.gwas.snp, this.data.gwas.logp)['snips'];
-
-      console.log(this.sortSnipsAndPValues(this.data.eqtls.snp, this.data.gwas.logp)['snips']);
-      console.log(this.sortSnipsAndPValues(this.data.eqtls.snp, this.data.gwas.logp)['snips']);
-
-
     }
 
     this.plot = {

@@ -1,21 +1,37 @@
-<div class="position-relative">
-    <div class="position-absolute" style="top: 15px; left: -50px;">
-        <ul style="list-style-type: none; margin: 0; padding: 0; font-size: 80%;">
-            <li *ngFor="let gene of data" [style.color]="colorGradientPicker(gene.posterior['PP.H4.abf'])" style="width: 160px; text-align: end; font-weight: bold;" 
-            (mouseenter)="drawGene(gene)" (mouseout)="resetCanvas()" (click)="openGeneModal(gene)">{{ gene.meta_data.gene_name }}</li>
-        </ul>
-    </div>
-    <canvas #canvas  width="300" height="325">
-    </canvas>
-    <div class="position-absolute" style="top: 15px; left: 190px;" *ngIf="data2">
-        <ul style="list-style-type: none; margin: 0; padding: 0; font-size: 80%;">
-            <li *ngFor="let gene of data2" [style.color]="colorGradientPicker(gene.posterior['PP.H4.abf'])" style="width: 160px; text-align: start; z-index: 100;"
-            (mouseenter)="drawGene(gene)" (mouseout)="resetCanvas()" (click)="openGeneModal(gene)">{{ gene.meta_data.gene_name }}</li>
-        </ul>
-    </div>
+<div class="position-relative" *ngIf="chromosomeNumber">
 
+        <div class="row mx-0">
+            <div class="col-5">
+                <div class="mt-3">
+                    <ul class="gene-list">
+                        <li class="gene-list-item" [style.color]="colorGradientPicker(gene.posterior['PP.H4.abf'])" *ngFor="let gene of data" 
+                        (mouseenter)="highlightGene(gene)" (mouseout)="removeHighlightedGene(gene)" (click)="openGeneModal(gene)">{{ gene.meta_data.gene_name }}</li>
+                    </ul>
+                </div>
+            </div>
+        
 
-    <!-- <div style="width: 50px; height: 50px;" [style.background-color]="pickHex(1)"></div> -->
+        <div class="col-2">
+            <div class="position-relative w-100">
+                <div class="end mx-auto" [style.top]=""></div>
+                <div class="arm mx-auto" style="margin-top: -20px;" [style.height]="calculateArmLength(chromosomeNumber, 'p') + 'px'"></div>
+                <div class="end mx-auto" [style.margin-top]="calculatePArmEndMargin(chromosomeNumber) + 'px'"></div>
+                <div class="end mx-auto" style="margin-top: -10px;"></div>
+                <div class="arm mx-auto" style="margin-top: -20px;" [style.height]="(calculateArmLength(chromosomeNumber, 'q') + 'px')"></div>
+                <div class="end mx-auto" style="margin-top: -20px;"></div>
+                <div class="gene position-absolute" [style.top]="calculateGenePosition(gene) + 'px'" *ngFor="let gene of data" [id]="gene.meta_data.gene_name"></div>
+            </div>
+        </div>
+
+        <div class="col-5">
+            <div class="position-absolute" style="top: 15px; left: 190px;" *ngIf="data2">
+                <ul class="gene-list">
+                    <li *ngFor="let gene of data2" [style.color]="colorGradientPicker(gene.posterior['PP.H4.abf'])" style="width: 160px; text-align: start; z-index: 100;"
+                    (mouseenter)="highlightGene(gene)" (mouseout)="removeHighlightedGene(gene)" (click)="openGeneModal(gene.meta_data.gene_name)">{{ gene.meta_data.gene_name }}</li>
+                </ul>
+            </div>
+        </div>
+     
 </div>
 
 

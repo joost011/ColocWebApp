@@ -11,9 +11,7 @@ export class ModalService {
   constructor() { }
 
   public openGeneModal(gene: any) {
-    this.selectedGene = gene;
-    console.log(this.selectedGene);
-    
+    this.selectedGene = gene;    
     this.geneModal.nativeElement.setAttribute('style', 'display: block;')
   }
 

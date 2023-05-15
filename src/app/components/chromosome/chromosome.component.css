@@ -1,4 +1,37 @@
-li:hover {
+.gene-list {
+    list-style-type: none;
+    font-size: 80%;
+}
+
+.gene-list-item {
+    text-align: end;
+    font-weight: bold;
+}
+
+.gene-list-item:hover {
     cursor: pointer;
     text-decoration: underline;
+}
+
+.arm {
+    width: 40px;
+    background-color: #AAAAAA;
+}
+
+.end {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #AAAAAA;
+}
+
+.gene {
+    height: 4px;
+    width: 40px;
+    background-color: #525051;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
 }

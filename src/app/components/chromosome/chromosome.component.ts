@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
@@ -105,113 +105,55 @@ export class ChromosomeComponent implements OnInit, AfterViewInit {
 
   @Input() chromosomeNumber: number = 0;
   @Input() data: any;
-  @ViewChild('canvas', { read: ElementRef }) canvas!: ElementRef<HTMLCanvasElement>;
-
   public data2: any;
 
-  ngOnInit(): void {
+  public geneElements: any = [];
 
+  ngOnInit(): void {
+    
   }
 
   ngAfterViewInit(): void {
-    this.draw();
+    // console.log(document.getElementsByClassName('gene'));
+    this.geneElements = document.getElementsByClassName('gene')
+  }
 
-    if (this.data.length > 10) {
-      this.data2 = this.data.splice(10, this.data.length);
+  public calculateArmLength(chromosomeNumber: number, arm: string) {
+    let length = 0
+
+    if (arm == 'p') {
+      length = (this.chromosomeData[chromosomeNumber].centromere - 20);
+    } else {
+      length = (this.chromosomeData[chromosomeNumber].length - this.chromosomeData[chromosomeNumber].centromere - 20);
     }
 
+    return length
   }
 
-
-  public drawGene(gene: any) {
-    let bandHeight = this.getLocation(gene);
-    let color = '#0F2098';
-    let offset = 25;
-    let ctx = this.canvas.nativeElement.getContext('2d');
-    ctx!.beginPath();
-    ctx!.rect(135, bandHeight + offset, 30, 3);
-    ctx!.strokeStyle = color;
-    ctx!.stroke();
-    ctx!.fillStyle = color;
-    ctx!.fill();
+  public calculatePArmEndMargin(chromosomeNumber: number){
+    if (this.calculateArmLength(chromosomeNumber, 'p') < 0){
+      return -35;
+    } else {
+      return -20;
+    }
   }
 
-  public resetCanvas() {
-    let ctx = this.canvas.nativeElement.getContext('2d');
-    ctx!.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
-    this.draw();
-  }
-
-  private getLocation(gene: any) {
-    let geneCenter = gene.meta_data.start_position + ((gene.meta_data.stop_position - gene.meta_data.start_position) / 2)
+  public calculateGenePosition(gene: any){
+    let geneCenter = gene.meta_data.start_position + ((gene.meta_data.stop_position - gene.meta_data.start_position) / 2);
     return geneCenter / 1000000;
   }
 
-  private draw() {
-    let centromeHeight = this.chromosomeData[this.chromosomeNumber]['centromere']
-    let totalHeight = this.chromosomeData[this.chromosomeNumber]['length']
-    let color = '#AAAAAA';
-    let ctx = this.canvas.nativeElement.getContext('2d');
-    let offset = 25;
-
-    ctx!.beginPath();
-    ctx!.arc(150, offset, 15, 0, 2 * Math.PI);
-    ctx!.strokeStyle = color;
-    ctx!.stroke();
-    ctx!.fillStyle = color;
-    ctx!.fill();
-
-    ctx!.beginPath();
-    ctx!.arc(150, totalHeight + offset, 15, 0, 2 * Math.PI);
-    ctx!.strokeStyle = color;
-    ctx!.stroke();
-    ctx!.fillStyle = color;
-    ctx!.fill();
-
-    ctx!.beginPath();
-    ctx!.rect(135, offset, 30, centromeHeight - offset + 1);
-    ctx!.strokeStyle = color;
-    ctx!.stroke();
-    ctx!.fillStyle = color;
-    ctx!.fill();
-
-    ctx!.beginPath();
-    ctx!.rect(135, centromeHeight + (offset * 2) - 5, 30, totalHeight - centromeHeight - 25);
-    ctx!.strokeStyle = color;
-    ctx!.stroke();
-    ctx!.fillStyle = color;
-    ctx!.fill();
-
-    let height = 25 * Math.cos(Math.PI / 6);
-
-    ctx!.beginPath();
-    ctx!.moveTo(135, centromeHeight + (offset * 2 - 5));
-    ctx!.lineTo(165, centromeHeight + (offset * 2 - 5));
-    ctx!.lineTo(150, centromeHeight + offset);
-    ctx!.closePath();
-    ctx!.strokeStyle = color;
-    ctx!.stroke();
-    ctx!.fillStyle = color;
-    ctx!.fill();
-
-    ctx!.beginPath();
-    ctx!.moveTo(135, (height + centromeHeight) - offset + 5);
-    ctx!.lineTo(165, (height + centromeHeight) - offset + 5);
-    ctx!.lineTo(150, centromeHeight + offset - 5);
-    ctx!.closePath();
-    ctx!.strokeStyle = color;
-    ctx!.stroke();
-    ctx!.fillStyle = color;
-    ctx!.fill();
-
-    ctx!.beginPath();
-    ctx!.arc(150, centromeHeight + offset, 8, 0, 2 * Math.PI);
-    ctx!.strokeStyle = color;
-    ctx!.stroke();
-    ctx!.fillStyle = color;
-    ctx!.fill();
+  public highlightGene(gene: any){
+    let geneElement: HTMLElement | null = document.getElementById(gene.meta_data.gene_name);
+    geneElement?.style.setProperty('background-color', '#3872C9');
+    geneElement?.style.setProperty('z-index', '999');
   }
 
+  public removeHighlightedGene(gene: any){
+    let geneElement: HTMLElement | null = document.getElementById(gene.meta_data.gene_name);
+    geneElement?.style.setProperty('background-color', '#525051');
+    geneElement?.style.setProperty('z-index', '1');
+  }
 
   public openGeneModal(gene: any) {
     this.modalService.openGeneModal(gene);
@@ -221,18 +163,17 @@ export class ChromosomeComponent implements OnInit, AfterViewInit {
     var hex = c.toString(16);
     return hex.length == 1 ? "0" + hex : hex;
   }
+
   public colorGradientPicker(weight: number) {
     let lowerRange = [255, 255, 255];
     let upperRange = [2, 115, 186];
     var w1 = weight;
     var w2 = (1 - w1) * 2;
     var rgb = [
-        Math.round(upperRange[0] * w1 + lowerRange[0] * w2),
-        Math.round(upperRange[1] * w1 + lowerRange[1] * w2),
-        Math.round(upperRange[2] * w1 + lowerRange[2] * w2)];
+      Math.round(upperRange[0] * w1 + lowerRange[0] * w2),
+      Math.round(upperRange[1] * w1 + lowerRange[1] * w2),
+      Math.round(upperRange[2] * w1 + lowerRange[2] * w2)];
     return "#" + this.RGBValueToHex(rgb[0]) + this.RGBValueToHex(rgb[1]) + this.RGBValueToHex(rgb[2]);
-}
-
-
+  }
 
 }
