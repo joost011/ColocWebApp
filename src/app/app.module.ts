@@ -14,6 +14,7 @@ import { GeneModalComponent } from './gene-modal/gene-modal.component';
 import * as PlotlyJS from 'plotly.js-dist-min';
 import { PlotlyModule } from 'angular-plotly.js';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { FooterComponent } from './components/footer/footer.component';
 PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
@@ -25,6 +26,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     ScatterPlotComponent,
     GeneModalComponent,
     NavBarComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
