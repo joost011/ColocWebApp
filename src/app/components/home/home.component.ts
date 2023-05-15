@@ -33,10 +33,17 @@ export class HomeComponent implements OnDestroy {
   ) { }
 
   public onFileSelect(event: any) {
+    console.log(event);
+
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
       this.file = file;
+    } else {
+      this.file = null;
     }
+
+    console.log(this.file);
+
   }
 
   public onSubmit() {
@@ -65,6 +72,15 @@ export class HomeComponent implements OnDestroy {
 
       })
     );
+  }
+
+  public removeFile() {
+    this.file = null;
+  }
+
+  public changeRadio(){
+    console.log('change');
+    
   }
 
   public startPolling(fileName: string) {

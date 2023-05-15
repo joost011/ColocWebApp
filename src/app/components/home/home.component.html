@@ -1,7 +1,7 @@
 <div class="row justify-content-center mx-0 mt-5">
 
     <div class="col-12">
-        <div class="row justify-content-center" *ngIf="!submitted">
+        <!-- <div class="row justify-content-center" *ngIf="!submitted">
             <div class="col-6 text-center">
                 <div class="mt-5">
                     <label for="inputTicket">Ticket:</label><br />
@@ -9,14 +9,54 @@
                     <button type="submit" *ngIf="!submitted" (click)="getStatus(inputTicket)">Get status</button>
                 </div>
             </div>
-        </div>
+        </div> -->
     
         <div class="row justify-content-center" *ngIf="!submitted">
-            <div class="col-3 text-center">
+            <div class="col-12 col-md-5 col-lg-2 text-center">
                 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-5">
+                    
+                    <div class="upload-container px-3 py-2">
+
+                        <div *ngIf="!file">
+                            <i class="bi bi-cloud-arrow-up" style="font-size: 2.5rem;"></i>
+                            <div>Drag a file to upload</div>
+                            <div class="text-small">or</div>
+                            <button class="button px-3 py-1 mt-2" (click)="fileInput.click()"><i class="bi bi-folder2-open"></i> Browse file</button>
+                            <div class="text-small text-muted my-2">Supported types: CSV, TSV, TXT</div>
+                        </div>
+                        
+                        <div *ngIf="file">
+                            <div class="remove-file-icon text-end"><i class="bi bi-x-circle-fill" (click)="removeFile(); fileInput.value = ''"></i></div>
+                            <div class="file-icon"><i class="bi bi-file-earmark-text"></i></div>
+                            <div class="file-name">{{ file['name'] }}</div>
+                        </div>
+                    </div>
+
+                    <input type="file" (change)="onFileSelect($event)" #fileInput class="file-input" />
+
+                    <!-- <div class="mt-4">
+                        <input type="radio" id="grch37" name="referenceGenome" value="grch37" formControlName="referenceGenome" />
+                        <label for="grch37">GRCh37</label>
+        
+                        <input type="radio" id="grch38" name="referenceGenome" value="grch38" formControlName="referenceGenome" class="ms-5" />
+                        <label for="grch38">GRCh38</label><br>
+                    </div> -->
+
+                    <div class="mt-4">
+                        <label class="container me-5">GRCh37
+                            <input type="radio" checked="checked" id="grch37" name="referenceGenome" value="grch37" formControlName="referenceGenome" />
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">GRCh38
+                            <input type="radio" name="radio" id="grch38" name="referenceGenome" value="grch38" formControlName="referenceGenome">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    
+   
     
-                    <label>Choose a GWAS file</label><br />
-                    <input type="file" (change)="onFileSelect($event)" /><br />
+                    <!-- <label>Choose a GWAS file</label><br />
+                    <input type="file" (change)="onFileSelect($event)" /><br /> -->
                     <!-- 
                     <div class="mt-5">
                         <input type="radio" id="grch37" name="referenceGenome" value="grch37" formControlName="referenceGenome" />
@@ -26,7 +66,7 @@
                         <label for="grch38">GRCh38</label><br>
                     </div> -->
     
-                    <button type="submit" class="mt-5">Start</button>
+                    <button type="submit" class="button px-3 py-2 mt-5">Start analysis</button>
     
                     <div >
                         

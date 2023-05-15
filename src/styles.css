@@ -1,7 +1,23 @@
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
 .dark-blue {
-    background-color: #3D4150;;
+    background-color: #3D4150;
 }
 
 .light-blue {
     background-color: #8ABEF4;
+}
+
+.button {
+    background-color: #8ABEF4;
+    border: 2px solid #3D4150;
+    color: #3D4150;
+    border-radius: 0.5em;
+    font-weight: bold;
+}
+
+.button:hover {
+    background-color: #3D4150;
+    border: 2px solid #8ABEF4;
+    color: #8ABEF4;
 }
