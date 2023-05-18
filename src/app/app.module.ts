@@ -15,6 +15,7 @@ import * as PlotlyJS from 'plotly.js-dist-min';
 import { PlotlyModule } from 'angular-plotly.js';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
@@ -27,6 +28,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     GeneModalComponent,
     NavBarComponent,
     FooterComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
