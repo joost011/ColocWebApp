@@ -6,6 +6,8 @@ import { Injectable } from '@angular/core';
 })
 export class MainService {
 
+  public loading: boolean = false;
+
   constructor(
     private http: HttpClient,
   ) { }

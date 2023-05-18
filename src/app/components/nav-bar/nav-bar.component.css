@@ -6,12 +6,35 @@
     overflow: hidden;
 }
 
-.line {
-    height: 8px;
-}
-
-.title{
+.title {
     color: #fff;
     font-weight: bold;
     font-size: 2.5em;
+}
+
+.loading-bar-container {
+    background-color: #8ABEF4;
+    height: 7px;
+    position: relative;
+    overflow: hidden;
+}
+
+.loading-bar {
+    background-color: #3D4150;
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    width: 50%;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-name: loading-bar-animation;
+}
+
+@keyframes loading-bar-animation {
+    from {
+        left: -50%;
+    }
+    to {
+        left: 100%;
+    }
 }
