@@ -123,7 +123,10 @@ export class ScatterPlotComponent {
           pad: 4
         },
       },
-
+      config: {
+        displaylogo: false,
+        responsive: true,
+      }
     }
   }
 
