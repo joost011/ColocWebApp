@@ -1,11 +1,11 @@
 <div class="position-relative">
 
-    <div class="row my-3 mx-0 justify-content-center" *ngIf="data">
+    <div class="row my-3 mx-0 justify-content-center">
         <div class="col-12 text-center">
             <div>
-                <span class="info-label px-5">Total genes tested: {{ data.total_tested_genes }}</span>
-                <span class="info-label px-5">Total genes colocalizing: {{ data.total_colocalizing_genes }} ({{
-                    data.total_colocalizing_genes / data.total_tested_genes * 100 | number }}%)</span>
+                <span class="info-label px-5">Total genes tested: <span *ngIf="data">{{ data.total_tested_genes }}</span></span>
+                <span class="info-label px-5">Total genes colocalizing: <span *ngIf="data">{{ data.total_colocalizing_genes }} ({{
+                    data.total_colocalizing_genes / data.total_tested_genes * 100 | number }}%)</span></span>
             </div>
             <!-- <div class="mt-3">
                 <span class="info-label px-5">Total eQTL SNPs: {{ data.total_eqtl_snps }}</span>

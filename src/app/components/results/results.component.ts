@@ -4,6 +4,7 @@ import { ModalService } from 'src/app/services/modal.service';
 import { ColocService } from 'src/app/services/coloc.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { MainService } from 'src/app/services/main.service';
 
 @Component({
   selector: 'app-results',
@@ -47,14 +48,14 @@ export class ResultsComponent {
   public uuid: string = '';
 
   constructor(
-    private location: Location,
     public modalService: ModalService,
     private colocService: ColocService,
     private route: ActivatedRoute,
+    public mainService: MainService,
   ) { }
 
   ngOnInit() {
-    this.loading = true;
+    this.mainService.loading = true;
     this.uuid = this.route.snapshot.paramMap.get('uuid')!;
 
     this.subscriptions.push(
@@ -65,23 +66,22 @@ export class ResultsComponent {
         for (const key in this.data['genes']) {
           const gene = this.data['genes'][key];
           let chromosome = gene['meta_data']['chromosome']
-    
+
           if (chromosome in this.chromosomeGenes) {
             this.chromosomeGenes[chromosome].push(gene)
           } else {
             this.chromosomeGenes[chromosome] = [gene]
           }
-    
-          this.loading = false;
+
+          this.mainService.loading = false;
         }
       })
     );
 
-    
   }
 
   ngAfterViewInit(): void {
-    this.modalService.geneModal = this.geneModal;    
+    this.modalService.geneModal = this.geneModal;
   }
 
   ngOnDestroy(): void {

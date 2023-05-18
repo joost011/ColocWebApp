@@ -1,0 +1,49 @@
+.modal-container {
+    position: fixed;
+    background-color: rgba(122, 122, 122, 0.5);
+    z-index: 999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.modal-window {
+    background-color: white;
+    margin-top: 5vh;
+    border: 1px solid black;
+    min-height: 60vh;
+}
+
+.modal-body {
+    padding: 25px;
+}
+
+.header {
+    background-color: #800a01;
+    color: white;
+}
+
+.error-icon {
+    color: #800a01;
+    font-size: 80px;
+}
+
+.error-message {
+    font-size: 1.5em;
+}
+
+.close-button {
+    font-size: 2em;
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: white;
+}
+
+.close-button:hover {
+    cursor: pointer;
+}
+

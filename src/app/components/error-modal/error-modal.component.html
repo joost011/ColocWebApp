@@ -1,0 +1,39 @@
+<div class="modal-container" (click)="modalService.closeGeneModal()">
+    <div class="row mx-0 justify-content-center">
+        <div class="col-12 col-md-5 col-xxl-2">
+
+            <div class="modal-window position-relative"
+                (click)="$event.stopPropagation()">
+
+                <span class="close-button m-3" (click)="modalService.closeErrorModal()">&#10005;</span>
+
+                <div class="row mx-0">
+                    <div class="col-12 px-0">
+                        <div class="header">
+                            <h2 class="p-2 m-0">ERROR <span *ngIf="modalService.error.code">({{ modalService.error.code }})</span></h2>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-body">
+                    
+                    <div class="row mx-0 justify-content-center">
+                        <div class="col-12 text-center">
+                            <i class="bi bi-x-octagon-fill error-icon"></i>                            
+                        </div>
+                    </div>
+
+                    <div class="row mx-0 justify-content-center">
+                        <div class="col-12 text-center">
+                            <div class="error-message">{{ modalService.error.message }}</div>
+                        </div>
+                    </div>
+
+    
+                </div>
+                
+
+            </div>
+        </div>
+    </div>
+</div>
