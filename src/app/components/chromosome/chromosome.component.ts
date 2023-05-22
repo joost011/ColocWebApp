@@ -14,96 +14,103 @@ export class ChromosomeComponent implements OnInit, AfterViewInit {
 
   public chromosomeData: any = {
     1: {
-      length: 249,
-      centromere: 121,
+      length: 247.5,
+      centromere: 124.2,
     },
     2: {
       length: 243,
-      centromere: 92,
+      centromere: 93.4,
     },
     3: {
-      length: 198,
-      centromere: 90,
+      length: 199.5,
+      centromere: 91.7,
     },
     4: {
-      length: 191,
-      centromere: 50,
+      length: 191.3,
+      centromere: 50.9,
     },
     5: {
-      length: 181,
-      centromere: 84,
+      length: 180.9,
+      centromere: 47.7,
     },
     6: {
       length: 171,
       centromere: 58.6,
     },
     7: {
-      length: 159,
-      centromere: 61,
+      length: 158.8,
+      centromere: 58.9,
     },
     8: {
-      length: 146,
-      centromere: 45,
+      length: 146.3,
+      centromere: 45.2,
     },
     9: {
-      length: 141,
-      centromere: 49,
+      length: 140.3,
+      centromere: 50.6,
     },
     10: {
-      length: 135,
-      centromere: 40,
+      length: 135.4,
+      centromere: 40.3,
     },
     11: {
-      length: 135,
-      centromere: 53,
+      length: 134.5,
+      centromere: 52.9,
     },
     12: {
-      length: 133,
-      centromere: 35,
+      length: 132.4,
+      centromere: 35.4,
     },
     13: {
-      length: 114,
-      centromere: 18,
-    },
-    14: {
-      length: 106,
-      centromere: 22,
-    },
-    15: {
-      length: 101,
-      centromere: 37,
-    },
-    16: {
-      length: 90,
-      centromere: 33,
-    },
-    17: {
-      length: 83,
-      centromere: 24,
-    },
-    18: {
-      length: 80,
-      centromere: 17,
-    },
-    19: {
-      length: 59,
-      centromere: 26,
-    },
-    20: {
-      length: 63,
-      centromere: 28,
-    },
-    21: {
-      length: 48,
-      centromere: 14,
-    },
-    22: {
-      length: 50,
+      length: 114.4,
       centromere: 16,
     },
+    14: {
+      length: 106.4,
+      centromere: 15.6,
+    },
+    15: {
+      length: 100.4,
+      centromere: 17,
+    },
+    16: {
+      length: 88.8,
+      centromere: 38.2,
+    },
+    17: {
+      length: 78.8,
+      centromere: 22.2,
+    },
+    18: {
+      length: 76.1,
+      centromere: 16.1,
+    },
+    19: {
+      length: 63.8,
+      centromere: 28.5,
+    },
+    20: {
+      length: 62.4,
+      centromere: 27.1,
+    },
+    21: {
+      length: 46.9,
+      centromere: 12.3,
+    },
+    22: {
+      length: 49.7,
+      centromere: 11.8,
+    },
+    'x': {
+      length: 154.9,
+      centromere: 59.4,
+    },
+    'y':  {
+      length: 57.7,
+    }
   }
 
-  @Input() chromosomeNumber: number = 0;
+  @Input() chromosomeNumber: any = 0;
   @Input() data: any;
   public data2: any;
 
@@ -118,7 +125,7 @@ export class ChromosomeComponent implements OnInit, AfterViewInit {
     this.geneElements = document.getElementsByClassName('gene')
   }
 
-  public calculateArmLength(chromosomeNumber: number, arm: string) {
+  public calculateArmLength(chromosomeNumber: number | string, arm: string) {
     let length = 0
 
     if (arm == 'p') {
@@ -130,7 +137,7 @@ export class ChromosomeComponent implements OnInit, AfterViewInit {
     return length
   }
 
-  public calculatePArmEndMargin(chromosomeNumber: number){
+  public calculatePArmEndMargin(chromosomeNumber: number | string){
     if (this.calculateArmLength(chromosomeNumber, 'p') < 0){
       return -35;
     } else {

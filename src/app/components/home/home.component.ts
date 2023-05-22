@@ -33,17 +33,12 @@ export class HomeComponent implements OnDestroy {
   ) { }
 
   public onFileSelect(event: any) {
-    console.log(event);
-
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
       this.file = file;
     } else {
       this.file = null;
     }
-
-    console.log(this.file);
-
   }
 
   public onSubmit() {
@@ -122,7 +117,7 @@ export class HomeComponent implements OnDestroy {
         this.ticket = res['uuid']
 
         if (this.colocObject['finished']) {
-          this.router.navigateByUrl('coloc/' + uuid);
+          this.router.navigateByUrl('result/' + uuid);
         } else {
           this.polling = true;
           this.polStatus(this.colocObject['uuid']);
