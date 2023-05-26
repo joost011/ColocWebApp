@@ -5,6 +5,8 @@ import { ColocService } from 'src/app/services/coloc.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MainService } from 'src/app/services/main.service';
+import { Result } from 'src/app/interfaces/result';
+import { Gene } from 'src/app/interfaces/gene';
 
 @Component({
   selector: 'app-results',
@@ -14,9 +16,10 @@ import { MainService } from 'src/app/services/main.service';
 export class ResultsComponent {
 
   @ViewChild('geneModal', { read: ElementRef }) geneModal!: ElementRef;
-  public data: any | null = null;
+  public data: Result | null = null;
   private subscriptions: Subscription[] = [];
   public loading: boolean = true;
+  public selectedView: string = 'chromosome';
 
   public chromosomeGenes: any = {
     1: [],
@@ -62,15 +65,24 @@ export class ResultsComponent {
       this.colocService.getResult(this.uuid).subscribe(res => {
         console.log(res);
         this.data = res;
+        let genes: Gene[] = [];
 
         for (const key in this.data['genes']) {
-          const gene = this.data['genes'][key];
-          let chromosome = gene['meta_data']['chromosome']
+          let gene: Gene = this.data.genes[key];
+          gene.meta_data.gene_id = key;
+          genes.push(gene);
+        }
 
-          if (chromosome in this.chromosomeGenes) {
-            this.chromosomeGenes[chromosome].push(gene)
+        this.data.genes = genes;
+
+        for (let gene of this.data.genes) {
+    
+          let chromosome: number = gene.meta_data.chromosome;
+
+          if (chromosome in this.chromosomeGenes) {           
+            this.chromosomeGenes[chromosome].push(gene);
           } else {
-            this.chromosomeGenes[chromosome] = [gene]
+            this.chromosomeGenes[chromosome] = [gene];
           }
 
           this.mainService.loading = false;
@@ -83,6 +95,27 @@ export class ResultsComponent {
   ngAfterViewInit(): void {
     this.modalService.geneModal = this.geneModal;
   }
+
+  public moveTab(tabContainer: HTMLElement, chromosomeTab: HTMLElement, listTab: HTMLElement, activeTab: HTMLElement) {
+
+    if (activeTab == chromosomeTab && chromosomeTab.classList.contains('active')){
+      return;
+    }
+
+    if (activeTab == listTab && listTab.classList.contains('active')){
+      return;
+    }
+
+    this.selectedView = activeTab.getAttribute('id')!;
+    
+    let direction = activeTab.getAttribute('direction');
+    tabContainer.classList.remove('left', 'right');
+    tabContainer.classList.add(direction!);
+    chromosomeTab.classList.remove('active');
+    listTab.classList.remove('active');
+    activeTab.classList.add('active');
+  }
+  
 
   ngOnDestroy(): void {
     // Unsubscribe on all subscriptions to free some memory

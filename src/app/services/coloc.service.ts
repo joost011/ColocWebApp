@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { MainService } from './main.service';
 import { environment } from 'src/environments/environment.development';
 import { ColocAnalysis } from '../interfaces/coloc-analysis';
+import { Result } from '../interfaces/result';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,6 @@ export class ColocService {
   }
 
   public getResult(uuid: string){
-    return this.http.get(environment.baseUrl + 'result/' + uuid, this.mainService.getHttpOptions());
+    return this.http.get<Result>(environment.baseUrl + 'result/' + uuid, this.mainService.getHttpOptions());
   }
 }

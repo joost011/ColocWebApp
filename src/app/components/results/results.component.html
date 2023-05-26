@@ -1,11 +1,14 @@
 <div class="position-relative">
 
+    <!-- Summary info -->
     <div class="row my-3 mx-0 justify-content-center">
         <div class="col-12 text-center">
             <div>
-                <span class="info-label px-5">Total genes tested: <span *ngIf="data">{{ data.total_tested_genes }}</span></span>
-                <span class="info-label px-5">Total genes colocalizing: <span *ngIf="data">{{ data.total_colocalizing_genes }} ({{
-                    data.total_colocalizing_genes / data.total_tested_genes * 100 | number }}%)</span></span>
+                <span class="info-label px-5">Total genes tested: <span *ngIf="data">{{ data.total_tested_genes
+                        }}</span></span>
+                <span class="info-label px-5">Total genes colocalizing: <span *ngIf="data">{{
+                        data.total_colocalizing_genes }} ({{
+                        data.total_colocalizing_genes / data.total_tested_genes * 100 | number }}%)</span></span>
             </div>
             <!-- <div class="mt-3">
                 <span class="info-label px-5">Total eQTL SNPs: {{ data.total_eqtl_snps }}</span>
@@ -14,38 +17,81 @@
         </div>
     </div>
 
-    <div class="row mx-0 justify-content-center">
-        <div class="col-10">
-            <hr />
-        </div>
-    </div>
-
-    <div class="row mx-0 justify-content-center">
-        <div class="col-6 text-center">
-            <div>Posterior probability H4</div>
-            <div class="row mx-0 mt-2 justify-content-center">
-
-                <div class="col-1 p-0" style="margin-top: 5px;">
-                    <span>0.8</span>
-                </div>
-
-                <div class="col-12 col-md-10 col-lg-6 p-0">
-                    <div class="color-legend"></div>
-                </div>
-
-                <div class="col-1 p-0" style="margin-top: 5px;">
-                    <span>1.0</span>
-                </div>
+    <!-- Tabs -->
+    <div class="row mx-0 my-5 justify-content-center text-center">
+        <div class="col-12 col-md-6 col-xl-4">
+            <div class="tab-switch left text-center h-100 d-flex align-items-center" #tabContainer>
+                <div class="tab active p-3" id="chromosome" (click)="moveTab(tabContainer, chromosomeTab, listTab, chromosomeTab)"
+                    direction="left" #chromosomeTab><div style="transform: rotate(90deg); display: inline-block;"><i class="bi bi-text-center"></i></div> Chromosome view</div>
+                <div class="tab p-3" id="list" (click)="moveTab(tabContainer, chromosomeTab, listTab, listTab)" direction="right"
+                    #listTab><i class="bi bi-list"></i> List view</div>
             </div>
         </div>
     </div>
 
-    <div class="row mx-0 mb-5 justify-content-center">
-        <div class="col-12 col-md-4 col-lg-3 mt-5" *ngFor="let chromosome of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]">
-            <div class="text-center mb-3"><span class="fw-bold ms-0">Chromosome {{ chromosome }}</span></div>
-            <app-chromosome [chromosomeNumber]="chromosome" [data]="chromosomeGenes[chromosome]"></app-chromosome>
+    <!-- Chromosome view -->
+    <div *ngIf="selectedView == 'chromosome'">
+
+        <!-- Color legend -->
+        <div class="row mx-0 justify-content-center">
+            <div class="col-6 text-center">
+                <div>Posterior probability H4</div>
+                <div class="row mx-0 mt-2 justify-content-center">
+    
+                    <div class="col-1 p-0" style="margin-top: 5px;">
+                        <span>0.8</span>
+                    </div>
+    
+                    <div class="col-12 col-md-10 col-lg-6 p-0">
+                        <div class="color-legend"></div>
+                    </div>
+    
+                    <div class="col-1 p-0" style="margin-top: 5px;">
+                        <span>1.0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Chromosomes -->
+        <div class="row mx-0 mb-5 justify-content-center">
+            <div class="col-12 col-md-4 col-lg-3 mt-5"
+                *ngFor="let chromosome of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]">
+                <div class="text-center mb-3"><span class="fw-bold ms-0">Chromosome {{ chromosome }}</span></div>
+                <app-chromosome [chromosomeNumber]="chromosome" [data]="chromosomeGenes[chromosome]"></app-chromosome>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- List view -->
+    <div *ngIf="selectedView == 'list'">
+        <div class="row mx-0 justify-content-center text-center">
+            <div class="col-12" style="overflow: auto;">
+                <table class="table table-striped table-hover mb-5">
+                    <thead>
+                        <tr>
+                          <th scope="col">Gene name</th>
+                          <th scope="col">Gene ID</th>
+                          <th scope="col">Chromosome</th>
+                          <th scope="col">Tested SNPs</th>
+                          <th scope="col">PPH4</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="data">
+                        <tr *ngFor="let gene of data.genes">
+                          <td>{{ gene.meta_data.gene_name }}</td>
+                          <td>{{ gene.meta_data.gene_id }}</td>
+                          <td>{{ gene.meta_data.chromosome }}</td>
+                          <td>{{ gene.meta_data.total_intersecting_snps }}</td>
+                          <td>{{ gene.posterior['PP.H4.abf'] }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+    
 
     <app-gene-modal #geneModal style="display: none;"></app-gene-modal>
 </div>
