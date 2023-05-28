@@ -1,5 +1,4 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Location } from '@angular/common'
 import { ModalService } from 'src/app/services/modal.service';
 import { ColocService } from 'src/app/services/coloc.service';
 import { ActivatedRoute } from '@angular/router';
@@ -7,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { MainService } from 'src/app/services/main.service';
 import { Result } from 'src/app/interfaces/result';
 import { Gene } from 'src/app/interfaces/gene';
+import { ExportService } from 'src/app/services/export.service';
 
 @Component({
   selector: 'app-results',
@@ -20,6 +20,7 @@ export class ResultsComponent {
   private subscriptions: Subscription[] = [];
   public loading: boolean = true;
   public selectedView: string = 'chromosome';
+  public csvExportLoading: boolean = false;
 
   public chromosomeGenes: any = {
     1: [],
@@ -46,7 +47,6 @@ export class ResultsComponent {
     22: [],
   };
 
-
   public selectedGene: any;
   public uuid: string = '';
 
@@ -55,6 +55,7 @@ export class ResultsComponent {
     private colocService: ColocService,
     private route: ActivatedRoute,
     public mainService: MainService,
+    private exportService: ExportService,
   ) { }
 
   ngOnInit() {
@@ -76,10 +77,10 @@ export class ResultsComponent {
         this.data.genes = genes;
 
         for (let gene of this.data.genes) {
-    
+
           let chromosome: number = gene.meta_data.chromosome;
 
-          if (chromosome in this.chromosomeGenes) {           
+          if (chromosome in this.chromosomeGenes) {
             this.chromosomeGenes[chromosome].push(gene);
           } else {
             this.chromosomeGenes[chromosome] = [gene];
@@ -98,16 +99,16 @@ export class ResultsComponent {
 
   public moveTab(tabContainer: HTMLElement, chromosomeTab: HTMLElement, listTab: HTMLElement, activeTab: HTMLElement) {
 
-    if (activeTab == chromosomeTab && chromosomeTab.classList.contains('active')){
+    if (activeTab == chromosomeTab && chromosomeTab.classList.contains('active')) {
       return;
     }
 
-    if (activeTab == listTab && listTab.classList.contains('active')){
+    if (activeTab == listTab && listTab.classList.contains('active')) {
       return;
     }
 
     this.selectedView = activeTab.getAttribute('id')!;
-    
+
     let direction = activeTab.getAttribute('direction');
     tabContainer.classList.remove('left', 'right');
     tabContainer.classList.add(direction!);
@@ -115,7 +116,30 @@ export class ResultsComponent {
     listTab.classList.remove('active');
     activeTab.classList.add('active');
   }
-  
+
+
+  public exportToCSV() {
+    // Show loading icon
+    this.csvExportLoading = true;
+
+    this.exportService.exportToCSV(this.uuid).subscribe(res => {
+      // Create a blob URL for the downloaded file
+      const downloadUrl = URL.createObjectURL(res);
+
+      // Trigger the file download
+      const link = document.createElement('a');
+      link.href = downloadUrl;      
+      link.download = this.uuid + '.csv';
+      link.click();
+
+      // Clean up the blob URL
+      URL.revokeObjectURL(downloadUrl);
+
+      // Hide loading icon
+      this.csvExportLoading = false;
+    });
+  }
+
 
   ngOnDestroy(): void {
     // Unsubscribe on all subscriptions to free some memory

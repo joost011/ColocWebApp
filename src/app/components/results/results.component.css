@@ -2,6 +2,25 @@
   font-size: 1.5em;
 }
 
+.export-csv-button {
+  background-color: #107C41;
+  border: 2px solid #107C41;
+  color: white;
+  border-radius: 0.5em;
+}
+
+.export-csv-button:hover {
+  background-color: white;
+  color: #107C41;
+  cursor: pointer;
+}
+
+.spinner-border {
+  color: white;
+  width: 15px;
+  height: 15px;
+}
+
 .color-legend {
   border: 1px solid black;
   background-image: linear-gradient(to right, #68c2fb, #0273ba);

@@ -1,5 +1,16 @@
 <div class="position-relative">
 
+    <!-- Export buttons -->
+    <div class="row mx-0 my-3">
+        <div class="col-12 text-end">
+            <button class="export-csv-button py-2 px-3" (click)="exportToCSV()">
+                <div class="spinner-border" role="status" *ngIf="csvExportLoading">
+                    <span class="sr-only"></span>
+                </div>
+                <i class="bi bi-filetype-csv" *ngIf="!csvExportLoading"></i> Export to CSV</button>
+        </div>
+    </div>
+
     <!-- Summary info -->
     <div class="row my-3 mx-0 justify-content-center">
         <div class="col-12 text-center">
