@@ -13,10 +13,22 @@ export class ExportService {
     private mainService: MainService,
   ) { }
 
-  public exportToCSV(uuid: string) {
+  public exportAllToCSV(uuid: string) {
     let body = {
       uuid: uuid,
-      format: 'csv',
+      export_type: 'csv_all',
+    }
+
+    const headers = new HttpHeaders().set('Accept', 'application/json');
+
+    return this.http.post<any>(environment.baseUrl + 'export', body, { headers, responseType: 'blob' as 'json'});
+  }
+
+  public exportGeneToCSV(uuid: string, gene: string){
+    let body = {
+      uuid: uuid,
+      export_type: 'csv_gene',
+      gene: gene,
     }
 
     const headers = new HttpHeaders().set('Accept', 'application/json');

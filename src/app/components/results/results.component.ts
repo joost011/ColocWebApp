@@ -20,7 +20,8 @@ export class ResultsComponent {
   private subscriptions: Subscription[] = [];
   public loading: boolean = true;
   public selectedView: string = 'chromosome';
-  public csvExportLoading: boolean = false;
+  public csvAllExportLoading: boolean = false;
+  public csvGenesExportLoading: string[] = [];
 
   public chromosomeGenes: any = {
     1: [],
@@ -95,6 +96,7 @@ export class ResultsComponent {
 
   ngAfterViewInit(): void {
     this.modalService.geneModal = this.geneModal;
+    this.modalService.uuid = this.uuid;
   }
 
   public moveTab(tabContainer: HTMLElement, chromosomeTab: HTMLElement, listTab: HTMLElement, activeTab: HTMLElement) {
@@ -118,28 +120,53 @@ export class ResultsComponent {
   }
 
 
-  public exportToCSV() {
+  public exportAllToCSV() {
     // Show loading icon
-    this.csvExportLoading = true;
+    this.csvAllExportLoading = true;
 
-    this.exportService.exportToCSV(this.uuid).subscribe(res => {
-      // Create a blob URL for the downloaded file
-      const downloadUrl = URL.createObjectURL(res);
-
-      // Trigger the file download
-      const link = document.createElement('a');
-      link.href = downloadUrl;      
-      link.download = this.uuid + '.csv';
-      link.click();
-
-      // Clean up the blob URL
-      URL.revokeObjectURL(downloadUrl);
-
-      // Hide loading icon
-      this.csvExportLoading = false;
-    });
+    this.subscriptions.push(
+      this.exportService.exportAllToCSV(this.uuid).subscribe(res => {
+        // Create a blob URL for the downloaded file
+        const downloadUrl = URL.createObjectURL(res);
+  
+        // Trigger the file download
+        const link = document.createElement('a');
+        link.href = downloadUrl;      
+        link.download = this.uuid + '.csv';
+        link.click();
+  
+        // Clean up the blob URL
+        URL.revokeObjectURL(downloadUrl);
+  
+        // Hide loading icon
+        this.csvAllExportLoading = false;
+      })
+    );
   }
 
+  public exportGeneToCSV(gene: string){
+    // Show loading icon for gene
+    this.csvGenesExportLoading.push(gene);
+
+    this.subscriptions.push(
+      this.exportService.exportGeneToCSV(this.uuid, gene).subscribe(res => {
+        // Create a blob URL for the downloaded file
+        const downloadUrl = URL.createObjectURL(res);
+  
+        // Trigger the file download
+        const link = document.createElement('a');
+        link.href = downloadUrl;      
+        link.download = gene + '_' + this.uuid + '.csv';
+        link.click();
+  
+        // Clean up the blob URL
+        URL.revokeObjectURL(downloadUrl);
+
+        // Hide loading icon for gene
+        this.csvGenesExportLoading = this.csvGenesExportLoading.filter(item => item !== gene);
+      })
+    );
+  }
 
   ngOnDestroy(): void {
     // Unsubscribe on all subscriptions to free some memory

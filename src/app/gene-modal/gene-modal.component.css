@@ -19,6 +19,19 @@
     cursor: pointer;
 }
 
+.export-csv-button {
+    background-color: #107C41;
+    border: 2px solid #107C41;
+    color: white;
+    border-radius: 0.5em;
+}
+
+.export-csv-button:hover {
+    background-color: white;
+    color: #107C41;
+    cursor: pointer;
+}
+
 .info-label {
     font-size: 1.2em;
 }

@@ -15,10 +15,17 @@
   cursor: pointer;
 }
 
-.spinner-border {
-  color: white;
-  width: 15px;
-  height: 15px;
+.gene-download-icon {
+  font-size: 120%;
+}
+
+.gene-download-icon:hover {
+  color: #0273ba;
+  cursor: pointer;
+}
+
+.gene-loading-icon {
+  font-size: 140%;
 }
 
 .color-legend {
@@ -26,6 +33,7 @@
   background-image: linear-gradient(to right, #68c2fb, #0273ba);
   width: 100%;
   height: 30px;
+  border-radius: 2em;
 }
 
 .tab-switch {

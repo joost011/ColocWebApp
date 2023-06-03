@@ -7,6 +7,7 @@ export class ModalService {
 
   public geneModal: any;
   public selectedGene: any;
+  public uuid: string = '';
   public errorModal: any;
   public error: any = {
     code: null,
