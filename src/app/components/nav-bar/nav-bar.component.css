@@ -4,12 +4,36 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
+    display: flex;
+    align-items: center;
 }
 
 .title {
     color: #fff;
     font-weight: bold;
     font-size: 2.5em;
+}
+
+.menu-items-container {
+    margin-left: auto;
+}
+
+.menu-item {
+    color: #a8a8a8;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: Bahnschrift Light;
+}
+
+.menu-item:hover {
+    text-decoration: underline;
+    text-underline-offset: 8px;
+}
+
+.menu-item.active {
+    color: white;
+    text-decoration: underline;
+    text-underline-offset: 8px;
 }
 
 .loading-bar-container {
@@ -34,6 +58,7 @@
     from {
         left: -50%;
     }
+
     to {
         left: 100%;
     }

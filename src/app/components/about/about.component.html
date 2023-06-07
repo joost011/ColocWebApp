@@ -1,0 +1,46 @@
+<div class="row mx-0 mt-5 justify-content-center">
+    <div class="col-12" style="font-family: Bahnschrift Light;">
+
+        <h3 class="px-5">Welcome to ColocAPI</h3>
+        <p class="px-5">
+            Coloc API allows for colocalization analysis to compare genetic associations datasets (e.g. GWAS and eQTL).
+            It returns summary files and locus visualization plots to allow for detailed review of the results. The
+            summary files are downloadable.
+            For the eQTL association dataset, data from the eQTL consortium phase I is used. It contains summary
+            statistics of 16.989 cis eQTL genes from 31.684 blood samples, making it the biggest eQTL dataset to date.
+            More eQTL datasets are planned soon to be added.
+            With coloc API you are able to upload your own GWAS summary statistics for the colocalization analysis. It
+            supports human datasets in build GRCh37 or GRCh38. Different phenotypes (e.g. quantitative and case-control)
+            for GWAS studies can be processed.
+            For colocalization analysis, the coloc package is used to see if there is a common genetic causal variant in
+            a given region. It is also possible to use the SuSIE approach to deal with multiple causal variants.
+        </p>
+
+        <h3 class="px-5">User guide/Requirements</h3>
+        <p class="px-5">
+            The GWAS file should be in .csv, .txt or .tsv format (comma, tab separated?). Columns that should be present
+            in the file and that are necessary for colocalization are: … .
+            Select the correct type of phenotype for the GWAS study in the options. Sample size should be given as well.
+            Currently, the assumption for the input data is that the population is European.
+            If there is no column with MAF values present in the GWAS dataset, MAF values will be used from the eQTL
+            dataset.
+        </p>
+
+        <h3 class="px-5">References</h3>
+        <ul class="px-5">
+            <li class="ms-3 py-2" *ngFor="let reference of references">{{ reference }}</li>
+        </ul>
+    </div>
+</div>
+
+<div class="row mx-0 my-5 justify-content-center">
+    <div class="col-12 col-md-3">
+        <img src="assets/images/logos/umcg.jpg" alt="UMCG" class="img-fluid px-3" />
+    </div>
+    <div class="col-12 col-md-3">
+        <img src="assets/images/logos/rug.jpg" alt="RUG" class="img-fluid px-3 mt-4" />
+    </div>
+    <div class="col-12 col-md-3">
+        <img src="assets/images/logos/hanze.png" alt="Hanze" class="img-fluid px-3" />
+    </div>
+</div>

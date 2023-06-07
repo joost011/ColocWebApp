@@ -1,7 +1,14 @@
 <div class="row mx-0">
     <div class="col-12 px-0">
         <div class="nav-bar dark-blue">
-            <span class="title light-blue-text ms-5">ColocAPI</span>
+            <span class="title ms-5">ColocAPI</span>
+            <div class="me-5" style="margin-left: auto;">
+                <span class="menu-item p-3" 
+                *ngFor="let menuItem of menuItems"
+                routerLinkActive="active" 
+                [routerLink]="menuItem.path"
+                >{{ menuItem.label }}</span>
+            </div>
         </div>
         <div class="loading-bar-container">
             <div class="loading-bar" *ngIf="mainService.loading"></div>
