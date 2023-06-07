@@ -19,6 +19,6 @@ export class NotFoundComponent {
   }
 
   public navigateToHomePage(){
-    this.router.navigateByUrl('index');
+    this.router.navigateByUrl('home');
   }
 }

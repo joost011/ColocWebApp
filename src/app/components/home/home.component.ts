@@ -17,14 +17,19 @@ export class HomeComponent implements OnDestroy {
   private subscriptions: Subscription[] = []
   public file = null
   public form = new FormGroup({
-    referenceGenome: new FormControl(''),
     file: new FormControl(''),
+    referenceGenome: new FormControl('grch37'),
+    type: new FormControl('cc'),
+    numCases: new FormControl(''),
+    numControls: new FormControl(''),
+    sampleSize: new FormControl(''),
   });
   public submitted: boolean = false;
   public colocObject: any;
   public ticket: string = '';
   public inputTicket: string = '';
   public polling: boolean = false;
+
 
   constructor(
     private fileService: FileService,
@@ -73,9 +78,9 @@ export class HomeComponent implements OnDestroy {
     this.file = null;
   }
 
-  public changeRadio(){
+  public changeRadio() {
     console.log('change');
-    
+
   }
 
   public startPolling(fileName: string) {
@@ -130,7 +135,6 @@ export class HomeComponent implements OnDestroy {
     this.subscriptions.push(
       this.colocService.post(this.form.value).subscribe(res => {
         this.stopPolling();
-        // this.router.navigateByUrl('coloc', { state: res });
       })
     );
   }

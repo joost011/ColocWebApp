@@ -1,4 +1,4 @@
-<div class="row justify-content-center mx-0 mt-5">
+<div class="row justify-content-center mx-0">
 
     <div class="col-12">
         <!-- <div class="row justify-content-center" *ngIf="!submitted">
@@ -12,10 +12,11 @@
         </div> -->
     
         <div class="row justify-content-center" *ngIf="!submitted">
-            <div class="col-12 col-md-5 col-lg-2 text-center">
-                <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-5">
+            <div class="col-12 col-md-6 col-lg-3 text-center">
+                <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-4">
                     
-                    <div class="upload-container px-3 py-2">
+                    <!-- File upload box -->
+                    <div class="upload-container py-1">
 
                         <div *ngIf="!file">
                             <i class="bi bi-cloud-arrow-up" style="font-size: 2.5rem;"></i>
@@ -34,47 +35,52 @@
 
                     <input type="file" (change)="onFileSelect($event)" #fileInput class="file-input" />
 
-                    <!-- <div class="mt-4">
-                        <input type="radio" id="grch37" name="referenceGenome" value="grch37" formControlName="referenceGenome" />
-                        <label for="grch37">GRCh37</label>
-        
-                        <input type="radio" id="grch38" name="referenceGenome" value="grch38" formControlName="referenceGenome" class="ms-5" />
-                        <label for="grch38">GRCh38</label><br>
-                    </div> -->
-
+                    <!-- Geference genome -->
                     <div class="mt-4">
-                        <label class="container me-5">GRCh37
-                            <input type="radio" checked="checked" id="grch37" name="referenceGenome" value="grch37" formControlName="referenceGenome" />
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container">GRCh38
-                            <input type="radio" name="radio" id="grch38" name="referenceGenome" value="grch38" formControlName="referenceGenome">
-                            <span class="checkmark"></span>
-                        </label>
+                        <div style="font-weight: bold;">Reference Genome:</div>
+                        <input type="radio" id="grch37" name="referenceGenome" value="grch37" formControlName="referenceGenome" class="form-check-input" />
+                        <label for="grch37">GRCh37</label>
+                        <input type="radio"  id="grch38" name="referenceGenome" value="grch38" formControlName="referenceGenome" class="form-check-input ms-5" />
+                        <label for="grch38">GRCh38</label><br>
+                    </div>
+
+                    <!-- Type -->
+                    <div class="mt-3">
+                        <div style="font-weight: bold;">Type:</div>
+                        <input type="radio" id="cc" name="type" value="cc" formControlName="type" class="form-check-input" />
+                        <label for="cc">Case/control</label>
+                        <input type="radio" class="form-check-input" id="quant" name="type" value="quant" formControlName="type" class="form-check-input ms-5" />
+                        <label for="quant">Quantitative</label><br>
+                    </div>
+
+                    <!-- Case/control input fields -->
+                    <div *ngIf="form.get('type')?.value == 'cc'" class="mt-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="numCases" class="form-label fw-bold">Number of cases:</label>
+                                <input type="number" id="numCases" class="form-control" />
+                            </div>
+                            <div class="col-6">
+                                <label for="numCases" class="form-label fw-bold">Number of controls:</label>
+                                <input type="number" id="numCases" class="form-control" />
+                            </div>
+                        </div> 
                     </div>
                     
-   
-    
-                    <!-- <label>Choose a GWAS file</label><br />
-                    <input type="file" (change)="onFileSelect($event)" /><br /> -->
-                    <!-- 
-                    <div class="mt-5">
-                        <input type="radio" id="grch37" name="referenceGenome" value="grch37" formControlName="referenceGenome" />
-                        <label for="grch37">GRCh37</label>
-        
-                        <input type="radio" id="grch38" name="referenceGenome" value="grch38" formControlName="referenceGenome" class="ms-5" />
-                        <label for="grch38">GRCh38</label><br>
-                    </div> -->
-    
-                    <button type="submit" class="button px-3 py-2 mt-5"><i class="bi bi-play-fill"></i> Start analysis</button>
-    
-                    <div >
-                        
+                    <!-- Quantitative input fields -->
+                    <div *ngIf="form.get('type')?.value == 'quant'" class="mt-3">
+                        <label for="sampleSize" class="form-label fw-bold">Sample size:</label>
+                        <input type="number" id="sampleSize" class="form-control" />
                     </div>
+    
+                    <!-- Submit button -->
+                    <button type="submit" class="button px-3 py-2 mt-4"><i class="bi bi-play-fill"></i> Start analysis</button>
+    
                 </form>
             </div>
         </div>
     
+
         <div class="row justify-content-center" *ngIf="colocObject">
             <div class="col-3 text-center">
                 <div>Ticket:</div>
