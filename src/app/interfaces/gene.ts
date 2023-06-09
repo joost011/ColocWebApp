@@ -19,6 +19,7 @@ export interface Gene {
         total_eqtl_snps: number,
         total_gwas_snps: number,
         total_intersecting_snps: number,
+        top_snp: string,
     },
     posterior: {
         'PP.H0.abf': number,

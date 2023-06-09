@@ -85,6 +85,8 @@
                           <th scope="col">Chromosome</th>
                           <th scope="col">Tested SNPs</th>
                           <th scope="col">PPH4</th>
+                          <th scope="col">Top SNP</th>
+                          <th scope="col"></th>
                         </tr>
                       </thead>
                       <tbody *ngIf="data">
@@ -94,6 +96,7 @@
                           <td>{{ gene.meta_data.chromosome }}</td>
                           <td>{{ gene.meta_data.total_intersecting_snps }}</td>
                           <td>{{ gene.posterior['PP.H4.abf'] }}</td>
+                          <td>{{ gene.meta_data.top_snp }}</td>
                           <td>
                             <span *ngIf="!csvGenesExportLoading.includes(gene.meta_data.gene_id!)"><i class="bi bi-download gene-download-icon" (click)="exportGeneToCSV(gene.meta_data.gene_id!)"></i></span>
                             <span *ngIf="csvGenesExportLoading.includes(gene.meta_data.gene_id!)"><i class="fa-solid fa-spinner fa-spin gene-loading-icon"></i></span>
