@@ -19,6 +19,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { ErrorModalComponent } from './components/error-modal/error-modal.component';
 import { AboutComponent } from './components/about/about.component';
+import { NgPipesModule } from 'ngx-pipes';
+import { CommonModule } from '@angular/common';
 PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
@@ -42,6 +44,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     FormsModule,
     ReactiveFormsModule,
     PlotlyModule,
+    NgPipesModule,
+    CommonModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

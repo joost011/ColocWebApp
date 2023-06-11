@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ColocAnalysis } from 'src/app/interfaces/coloc-analysis';
+import { ColocAnalysis, ColocAnalysisStatus } from 'src/app/interfaces/coloc-analysis';
 import { FileUploadRes } from 'src/app/interfaces/file-upload-res';
 import { ColocService } from 'src/app/services/coloc.service';
 import { FileService } from 'src/app/services/file.service';
@@ -26,15 +26,17 @@ export class HomeComponent implements OnDestroy {
   });
   public submitted: boolean = false;
   public colocObject: any;
+  public colocStatusList: ColocAnalysisStatus[] = [];
   public ticket: string = '';
   public inputTicket: string = '';
   public polling: boolean = false;
-
+  public lastStatusOrder: number = 0;
 
   constructor(
     private fileService: FileService,
     private colocService: ColocService,
     private router: Router,
+    private cdr: ChangeDetectorRef,
   ) { }
 
   public onFileSelect(event: any) {
@@ -47,6 +49,7 @@ export class HomeComponent implements OnDestroy {
   }
 
   public onSubmit() {
+    // Return if no file was uploaded
     if (!this.file) {
       return;
     }
@@ -60,6 +63,7 @@ export class HomeComponent implements OnDestroy {
 
     this.subscriptions.push(
       this.fileService.store(formData).subscribe((res: FileUploadRes) => {
+        console.log(res);
 
         if (res['file_name']) {
           this.submitted = true;
@@ -78,15 +82,13 @@ export class HomeComponent implements OnDestroy {
     this.file = null;
   }
 
-  public changeRadio() {
-    console.log('change');
-
-  }
 
   public startPolling(fileName: string) {
+    6
     this.polling = true;
     this.polStatus(fileName);
   }
+
 
   private polStatus(fileName: string) {
     if (this.polling) {
@@ -96,9 +98,11 @@ export class HomeComponent implements OnDestroy {
           this.colocService.getStatus(uuid).subscribe((res: ColocAnalysis) => {
             this.colocObject = res;
 
-            if (this.colocObject['finished']) {
+            this.updateColocStatusList(res.status_list);
+
+            if (this.colocObject.finished) {
               this.stopPolling();
-              this.router.navigateByUrl('coloc/' + uuid);
+              this.router.navigateByUrl('result/' + uuid);
             }
           })
         );
@@ -112,6 +116,28 @@ export class HomeComponent implements OnDestroy {
     this.polling = false;
   }
 
+  private updateColocStatusList(status_list: ColocAnalysisStatus[]) {
+    for (let newStatusObject of status_list) {
+      let objectToUpdate = this.colocStatusList.find((obj) => obj.status_order == newStatusObject.status_order);
+
+      if (objectToUpdate) {
+        objectToUpdate.status_message = newStatusObject.status_message;
+      } else {
+        this.colocStatusList.push(newStatusObject);
+      }
+    }
+
+    this.lastStatusOrder = this.colocStatusList.reduce((max, obj) => (obj.status_order > max.status_order ? obj : max)).status_order;
+    console.log(this.lastStatusOrder);
+
+
+    this.cdr.detectChanges();
+  }
+
+  public copyTicket() {
+    navigator.clipboard.writeText(this.ticket)
+  }
+
   public getStatus(fileName: string) {
     this.submitted = true;
     let uuid = fileName.split('.')[0];
@@ -122,6 +148,7 @@ export class HomeComponent implements OnDestroy {
         this.ticket = res['uuid']
 
         if (this.colocObject['finished']) {
+          this.polling = false;
           this.router.navigateByUrl('result/' + uuid);
         } else {
           this.polling = true;
@@ -134,7 +161,7 @@ export class HomeComponent implements OnDestroy {
   private submit() {
     this.subscriptions.push(
       this.colocService.post(this.form.value).subscribe(res => {
-        this.stopPolling();
+        // this.stopPolling();
       })
     );
   }

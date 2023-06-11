@@ -81,12 +81,29 @@
         </div>
     
 
-        <div class="row justify-content-center" *ngIf="colocObject">
-            <div class="col-3 text-center">
-                <div>Ticket:</div>
-                <div>{{ ticket }}</div><br />
-                <div>Status:</div>
-                <div>{{ colocObject.status_message }}</div>
+        <div class="row justify-content-center mt-5" *ngIf="colocObject">
+            <div class="col-12 col-md-5 col-xl-3 text-center">
+
+                <!-- Ticket field -->
+                <div class="fw-bold">Ticket:</div>
+                <div class="input-group">
+                    <input type="text" class="form-control" [value]="ticket" disabled />
+                    <button class="btn btn-secondary copy-button" type="button" (click)="copyTicket()"><i class="fa-solid fa-copy"></i></button>
+                  </div>
+
+                <!-- Status list -->
+                <div class="fw-bold mt-5">Status:</div>
+                <ul class="list-group">
+                    <li *ngFor="let statusObject of colocStatusList" class="list-group-item" [class.text-muted]="statusObject.status_order != lastStatusOrder">
+                        {{ statusObject.status_message }}
+                        <span class="float-end" *ngIf="statusObject.status_order == lastStatusOrder">
+                            <i class="fa-solid fa-spinner fa-spin"></i>
+                        </span>
+                        <span class="float-end" *ngIf="statusObject.status_order != lastStatusOrder">
+                            <i class="fa-solid fa-check"></i>
+                        </span>
+                    </li>
+                </ul>
             </div>
         </div>
     
