@@ -77,16 +77,16 @@
     <div *ngIf="selectedView == 'list'">
         <div class="row mx-0 justify-content-center text-center">
             <div class="col-12" style="overflow: auto;">
-                <table class="table table-striped table-hover mb-5">
+                <table datatable [dtOptions]="dtOptions" class="table table-striped table-hover mb-5">
                     <thead>
                         <tr>
-                          <th scope="col">Gene name</th>
-                          <th scope="col">Gene ID</th>
-                          <th scope="col">Chromosome</th>
-                          <th scope="col">Tested SNPs</th>
-                          <th scope="col">PPH4</th>
-                          <th scope="col">Top SNP</th>
-                          <th scope="col"></th>
+                          <th scope="col" class="text-center">Gene name</th>
+                          <th scope="col" class="text-center">Gene ID</th>
+                          <th scope="col" class="text-center">Chromosome</th>
+                          <th scope="col" class="text-center">Tested SNPs</th>
+                          <th scope="col" class="text-center">PPH4</th>
+                          <th scope="col" class="text-center">Top SNP</th>
+                          <th scope="col" class="text-center"></th>
                         </tr>
                       </thead>
                       <tbody *ngIf="data">

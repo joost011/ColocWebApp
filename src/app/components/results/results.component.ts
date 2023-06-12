@@ -22,6 +22,7 @@ export class ResultsComponent {
   public selectedView: string = 'chromosome';
   public csvAllExportLoading: boolean = false;
   public csvGenesExportLoading: string[] = [];
+  public dtOptions: DataTables.Settings = {};
 
   public chromosomeGenes: any = {
     1: [],
@@ -78,7 +79,6 @@ export class ResultsComponent {
         this.data.genes = genes;
 
         for (let gene of this.data.genes) {
-
           let chromosome: number = gene.meta_data.chromosome;
 
           if (chromosome in this.chromosomeGenes) {
@@ -87,6 +87,7 @@ export class ResultsComponent {
             this.chromosomeGenes[chromosome] = [gene];
           }
 
+          this.setDataTableSettings();
           this.mainService.loading = false;
         }
       })
@@ -97,6 +98,20 @@ export class ResultsComponent {
   ngAfterViewInit(): void {
     this.modalService.geneModal = this.geneModal;
     this.modalService.uuid = this.uuid;
+  }
+
+  private setDataTableSettings() {
+    this.dtOptions = {
+      columnDefs: [
+        { orderable: true, targets: [0, 1, 2, 3, 4] },
+        { orderable: false, targets: '_all' },
+      ],
+      pagingType: 'full_numbers',
+      dom: 'f',
+      lengthMenu: [[-1], ['All']],
+      order: [[4, 'desc']],
+      orderClasses: true,
+    }
   }
 
   public moveTab(tabContainer: HTMLElement, chromosomeTab: HTMLElement, listTab: HTMLElement, activeTab: HTMLElement) {
@@ -128,23 +143,23 @@ export class ResultsComponent {
       this.exportService.exportAllToCSV(this.uuid).subscribe(res => {
         // Create a blob URL for the downloaded file
         const downloadUrl = URL.createObjectURL(res);
-  
+
         // Trigger the file download
         const link = document.createElement('a');
-        link.href = downloadUrl;      
+        link.href = downloadUrl;
         link.download = this.uuid + '.csv';
         link.click();
-  
+
         // Clean up the blob URL
         URL.revokeObjectURL(downloadUrl);
-  
+
         // Hide loading icon
         this.csvAllExportLoading = false;
       })
     );
   }
 
-  public exportGeneToCSV(gene: string){
+  public exportGeneToCSV(gene: string) {
     // Show loading icon for gene
     this.csvGenesExportLoading.push(gene);
 
@@ -152,13 +167,13 @@ export class ResultsComponent {
       this.exportService.exportGeneToCSV(this.uuid, gene).subscribe(res => {
         // Create a blob URL for the downloaded file
         const downloadUrl = URL.createObjectURL(res);
-  
+
         // Trigger the file download
         const link = document.createElement('a');
-        link.href = downloadUrl;      
+        link.href = downloadUrl;
         link.download = gene + '_' + this.uuid + '.csv';
         link.click();
-  
+
         // Clean up the blob URL
         URL.revokeObjectURL(downloadUrl);
 

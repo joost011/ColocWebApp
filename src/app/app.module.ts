@@ -21,6 +21,7 @@ import { ErrorModalComponent } from './components/error-modal/error-modal.compon
 import { AboutComponent } from './components/about/about.component';
 import { NgPipesModule } from 'ngx-pipes';
 import { CommonModule } from '@angular/common';
+import { DataTablesModule } from 'angular-datatables';
 PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
@@ -46,6 +47,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     PlotlyModule,
     NgPipesModule,
     CommonModule,
+    DataTablesModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
