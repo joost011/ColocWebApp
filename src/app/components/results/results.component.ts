@@ -47,6 +47,8 @@ export class ResultsComponent {
     20: [],
     21: [],
     22: [],
+    'X': [],
+    'Y': [],
   };
 
   public selectedGene: any;
@@ -86,7 +88,6 @@ export class ResultsComponent {
           } else {
             this.chromosomeGenes[chromosome] = [gene];
           }
-
           this.setDataTableSettings();
           this.mainService.loading = false;
         }

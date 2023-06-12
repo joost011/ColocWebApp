@@ -65,7 +65,7 @@
         <!-- Chromosomes -->
         <div class="row mx-0 mb-5 justify-content-center">
             <div class="col-12 col-md-4 col-lg-3 mt-5"
-                *ngFor="let chromosome of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]">
+                *ngFor="let chromosome of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,'X','Y']">
                 <div class="text-center mb-3"><span class="fw-bold ms-0">Chromosome {{ chromosome }}</span></div>
                 <app-chromosome [chromosomeNumber]="chromosome" [data]="chromosomeGenes[chromosome]"></app-chromosome>
             </div>

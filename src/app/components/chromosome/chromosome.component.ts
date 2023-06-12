@@ -101,12 +101,13 @@ export class ChromosomeComponent implements OnInit, AfterViewInit {
       length: 49.7,
       centromere: 11.8,
     },
-    'x': {
+    'X': {
       length: 154.9,
       centromere: 59.4,
     },
-    'y':  {
+    'Y':  {
       length: 57.7,
+      centromere: 15,
     }
   }
 
