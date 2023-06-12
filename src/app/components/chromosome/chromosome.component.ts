@@ -154,7 +154,7 @@ export class ChromosomeComponent implements OnInit, AfterViewInit {
   public highlightGene(gene: any){
     let geneElement: HTMLElement | null = document.getElementById(gene.meta_data.gene_name);
     geneElement?.style.setProperty('background-color', this.colorGradientPicker(gene.posterior['PP.H4.abf']));
-    geneElement?.style.setProperty('z-index', '999');
+    geneElement?.style.setProperty('z-index', '998');
   }
 
   public removeHighlightedGene(gene: any){
