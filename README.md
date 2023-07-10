@@ -1,6 +1,11 @@
 # ColocWebApp
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.
+Authors: ExquizeNyx, JobMaathuis, joost011
+---
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4. <br>
+This repository contains the frontend for the website Colocator. <br>
+Colocator allows for colocalization analysis to compare genetic association datasets (e.g. GWAS and eQTL). <br>
+With Colocator you are able to upload your own GWAS summary statistics for colocalization analysis. <br> 
+It returns summary files and locus visualization plots to allow for detailed review of the results
 
 ## Development server
 
