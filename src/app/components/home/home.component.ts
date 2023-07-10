@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -39,6 +39,11 @@ export class HomeComponent implements OnDestroy {
     private cdr: ChangeDetectorRef,
   ) { }
 
+  /**
+* Sets file in class on file select event
+*
+* @param {any} event - File select event
+*/
   public onFileSelect(event: any) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
@@ -48,6 +53,10 @@ export class HomeComponent implements OnDestroy {
     }
   }
 
+
+  /**
+ * Initializes the submission of the form
+ */
   public onSubmit() {
     // Return if no file was uploaded
     if (!this.file) {
@@ -57,13 +66,18 @@ export class HomeComponent implements OnDestroy {
     this.uploadFile(this.file)
   }
 
+
+  /**
+ * Uploads a GWAS file to the API
+ *
+ * @param {File} file - File to be uploaded
+ */
   private uploadFile(file: File) {
     let formData = new FormData();
     formData.append('file', file)
 
     this.subscriptions.push(
       this.fileService.store(formData).subscribe((res: FileUploadRes) => {
-        console.log(res);
 
         if (res['file_name']) {
           this.submitted = true;
@@ -78,18 +92,31 @@ export class HomeComponent implements OnDestroy {
     );
   }
 
+
+  /**
+ * Removes file stored in class
+ */
   public removeFile() {
     this.file = null;
   }
 
 
+  /**
+   * Initializes polling for analysis process status
+   *
+   * @param {string} fileName - Ticket
+   */
   public startPolling(fileName: string) {
-    6
     this.polling = true;
     this.polStatus(fileName);
   }
 
 
+  /**
+   * Recursively requests the server for the status of an analysis process
+   *
+   * @param {string} fileName - Ticket
+   */
   private polStatus(fileName: string) {
     if (this.polling) {
       setTimeout(() => {
@@ -112,12 +139,22 @@ export class HomeComponent implements OnDestroy {
     }
   }
 
+
+  /**
+   * Stops the polling of the process status
+   */
   private stopPolling() {
     this.polling = false;
   }
 
-  private updateColocStatusList(status_list: ColocAnalysisStatus[]) {
-    for (let newStatusObject of status_list) {
+
+  /**
+   * Updates the statuslist shown after analysis process is started
+   *
+   * @param {ColocAnalysisStatus[]} statusList - Updated status list
+   */
+  private updateColocStatusList(statusList: ColocAnalysisStatus[]) {
+    for (let newStatusObject of statusList) {
       let objectToUpdate = this.colocStatusList.find((obj) => obj.status_order == newStatusObject.status_order);
 
       if (objectToUpdate) {
@@ -128,16 +165,23 @@ export class HomeComponent implements OnDestroy {
     }
 
     this.lastStatusOrder = this.colocStatusList.reduce((max, obj) => (obj.status_order > max.status_order ? obj : max)).status_order;
-    console.log(this.lastStatusOrder);
-
-
     this.cdr.detectChanges();
   }
 
+
+  /**
+   * Copies the ticket to the clipboard
+   */
   public copyTicket() {
     navigator.clipboard.writeText(this.ticket)
   }
 
+
+  /**
+   * Requests the server for the status of an analysis process
+   *
+   * @param {string} fileName - Ticket
+   */
   public getStatus(fileName: string) {
     this.submitted = true;
     let uuid = fileName.split('.')[0];
@@ -158,10 +202,12 @@ export class HomeComponent implements OnDestroy {
     );
   }
 
+  /**
+   * Submits the form to the API
+   */
   private submit() {
     this.subscriptions.push(
       this.colocService.post(this.form.value).subscribe(res => {
-        // this.stopPolling();
       })
     );
   }

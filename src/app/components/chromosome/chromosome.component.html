@@ -34,16 +34,6 @@
                 <div class="gene position-absolute" [style.top]="calculateGenePosition(gene) + 'px'" *ngFor="let gene of data" [id]="gene.meta_data.gene_name"></div>
             </div>
         </div>
-
-        <!-- Right list -->
-        <div class="col-5">
-            <div class="position-absolute" style="top: 15px; left: 190px;" *ngIf="data2">
-                <ul class="gene-list">
-                    <li *ngFor="let gene of data2" [style.color]="colorGradientPicker(gene.posterior['PP.H4.abf'])" style="width: 160px; text-align: start; z-index: 100;"
-                    (mouseenter)="highlightGene(gene)" (mouseout)="removeHighlightedGene(gene)" (click)="openGeneModal(gene.meta_data.gene_name)">{{ gene.meta_data.gene_name }}</li>
-                </ul>
-            </div>
-        </div>
      
 </div>
 

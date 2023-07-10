@@ -10,7 +10,6 @@ export class ExportService {
 
   constructor(
     private http: HttpClient,
-    private mainService: MainService,
   ) { }
 
   public exportAllToCSV(uuid: string) {

@@ -9,7 +9,6 @@ export class MainService {
   public loading: boolean = false;
 
   constructor(
-    private http: HttpClient,
   ) { }
 
   public getHttpOptions() {
