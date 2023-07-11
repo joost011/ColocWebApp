@@ -79,6 +79,7 @@ export class HomeComponent implements OnDestroy {
     this.subscriptions.push(
       this.fileService.store(formData).subscribe((res: FileUploadRes) => {
 
+        // If the response contains a property file_name, start polling for the status
         if (res['file_name']) {
           this.submitted = true;
           this.ticket = res['file_name'].split('.')[0];
@@ -191,10 +192,12 @@ export class HomeComponent implements OnDestroy {
         this.colocObject = res;
         this.ticket = res['uuid']
 
+        // If the finished property of the response is true, stop polling and navigate to result page
         if (this.colocObject['finished']) {
           this.polling = false;
           this.router.navigateByUrl('result/' + uuid);
         } else {
+          // Else, resume polling
           this.polling = true;
           this.polStatus(this.colocObject['uuid']);
         }

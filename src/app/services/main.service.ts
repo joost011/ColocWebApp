@@ -11,6 +11,11 @@ export class MainService {
   constructor(
   ) { }
 
+  /**
+   * Creates a HTTP headers object for a HTTP requests
+   *
+   * @returns {object} - HTTP options
+   */
   public getHttpOptions() {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',

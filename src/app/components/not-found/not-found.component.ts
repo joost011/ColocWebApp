@@ -14,11 +14,17 @@ export class NotFoundComponent {
     private router: Router,
   ) { }
 
+  /**
+   * Navigates to the previous page
+   */
   public navigateToPreviousPage() {
-    this.location.back(); 
+    this.location.back();
   }
 
-  public navigateToHomePage(){
+  /**
+   * Navigates to the home page
+   */
+  public navigateToHomePage() {
     this.router.navigateByUrl('home');
   }
 }

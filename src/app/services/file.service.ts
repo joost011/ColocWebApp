@@ -12,8 +12,13 @@ export class FileService {
     private http: HttpClient,
   ) { }
 
-
-  public store(file: FormData){
+  /**
+   * Makes post request to API for storing a GWAS file
+   *
+   * @param {FormData} file - The file to be stored
+   * @returns {FileUploadRes} - FileUploadRes object
+   */
+  public store(file: FormData) {
     return this.http.post<FileUploadRes>(environment.baseUrl + 'file', file);
   }
 }

@@ -66,12 +66,13 @@ export class ResultsComponent {
     this.mainService.loading = true;
     this.uuid = this.route.snapshot.paramMap.get('uuid')!;
 
+    // Get result
     this.subscriptions.push(
       this.colocService.getResult(this.uuid).subscribe(res => {
-        console.log(res);
         this.data = res;
         let genes: Gene[] = [];
 
+        // Add gene ID to gene object
         for (const key in this.data['genes']) {
           let gene: Gene = this.data.genes[key];
           gene.meta_data.gene_id = key;
@@ -80,6 +81,7 @@ export class ResultsComponent {
 
         this.data.genes = genes;
 
+        // Separate genes by chromosome
         for (let gene of this.data.genes) {
           let chromosome: number = gene.meta_data.chromosome;
 
@@ -101,6 +103,9 @@ export class ResultsComponent {
     this.modalService.uuid = this.uuid;
   }
 
+  /**
+   * Sets the settings of the sortable data table
+   */
   private setDataTableSettings() {
     this.dtOptions = {
       columnDefs: [
@@ -115,6 +120,14 @@ export class ResultsComponent {
     }
   }
 
+  /**
+   * Moves the chromosome view/list view tab
+   *
+   * @param {HTMLElement} tabContainer - The HTML element containing the tabs
+   * @param {HTMLElement} chromosomeTab - The HTML element containing the chromosome tab
+   * @param {HTMLElement} listTab - The HTML element containing the list tab
+   * @param {HTMLElement} activeTab - The HTML element containing the active tab
+   */
   public moveTab(tabContainer: HTMLElement, chromosomeTab: HTMLElement, listTab: HTMLElement, activeTab: HTMLElement) {
 
     if (activeTab == chromosomeTab && chromosomeTab.classList.contains('active')) {
@@ -136,6 +149,9 @@ export class ResultsComponent {
   }
 
 
+  /**
+     * Requests the CSV export for all genes
+     */
   public exportAllToCSV() {
     // Show loading icon
     this.csvAllExportLoading = true;
@@ -160,6 +176,11 @@ export class ResultsComponent {
     );
   }
 
+  /**
+     * Requests the CSV export for a single gene
+     * 
+     * @param {string} gene - Gene ID of the gene that needs to be exported
+     */
   public exportGeneToCSV(gene: string) {
     // Show loading icon for gene
     this.csvGenesExportLoading.push(gene);

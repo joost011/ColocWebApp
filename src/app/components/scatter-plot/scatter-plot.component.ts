@@ -38,47 +38,60 @@ export class ScatterPlotComponent {
     this.drawPlot();
   }
 
-  private sortSnipsAndPValues(snips: string[], pValues: number[]) {
-    let combined = snips.map((val, index) => ({ val1: val, val2: pValues[index] }));
+  /**
+     * Sorts snps snps in a way so that the order between the snps array and p-values array keep the same index order
+     * 
+     * @param {string[]} snps - Array of snps
+     * @param {number[]} pValues - Array of p-values
+     */
+  private sortSnipsAndPValues(snps: string[], pValues: number[]) {
+    let combined = snps.map((val, index) => ({ val1: val, val2: pValues[index] }));
     combined.sort((a, b) => a.val1.localeCompare(b.val1));
-    let sortedSnips = combined.map((obj) => obj.val1);
+    let sortedSnps = combined.map((obj) => obj.val1);
     let sortedPValues = combined.map((obj) => obj.val2);
     return {
-      snips: sortedSnips,
+      snips: sortedSnps,
       pValues: sortedPValues,
     }
   }
 
+  /**
+     * Configures and draws plot
+     */
   private drawPlot() {
     let x: any;
     let y: any;
-    let snips: any;
+    let snps: any;
 
+    // Set data if plot type is eqtl
     if (this.type == 'eqtl') {
       x = this.data.SNPPos
-      snips = this.data.snp;
+      snps = this.data.snp;
       y = this.data.logp
     }
 
+    // Set data if plot type is GWAS
     if (this.type == 'gwas') {
       x = this.data.base_pair_location;
-      snips = this.data.snp;
+      snps = this.data.snp;
       y = this.data.logp;
     }
 
+    // Set data if plot type is combined
     if (this.type == 'combined') {
       x = this.sortSnipsAndPValues(this.data.gwas.snp, this.data.gwas.logp)['pValues'];
       y = this.sortSnipsAndPValues(this.data.eqtls.snp, this.data.eqtls.logp)['pValues'];
-      snips = this.sortSnipsAndPValues(this.data.gwas.snp, this.data.gwas.logp)['snips'];
+      snps = this.sortSnipsAndPValues(this.data.gwas.snp, this.data.gwas.logp)['snips'];
     }
 
+    // Create plot object
     this.plot = {
       data: [
         {
           x: x,
           y: y,
           mode: 'markers',
-          text: snips,
+          text: snps,
           marker: {
             size: 7,
             opacity: 0.8,

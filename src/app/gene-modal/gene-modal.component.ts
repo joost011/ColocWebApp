@@ -16,6 +16,11 @@ export class GeneModalComponent {
     private exportService: ExportService,
   ) { }
 
+  /**
+     * Requests the CSV export for a single gene
+     * 
+     * @param {string} gene - Gene ID of the gene that needs to be exported
+     */
   public exportGeneToCSV(){
     // Show loading spinner
     this.csvDownloadLoading = true;
